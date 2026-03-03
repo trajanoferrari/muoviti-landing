@@ -1,0 +1,18 @@
+# Arquivos temporários e logs
+.tmp/
+*.log
+npm-debug.log*
+
+# Configurações de ambiente
+.env
+.env.local
+
+# Pastas de dependências (se houver)
+node_modules/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Pastas de execução interna
+execution/__pycache__/
