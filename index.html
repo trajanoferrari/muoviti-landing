@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -23,8 +23,9 @@
             </div>
             <nav>
                 <a href="#intro">Il Progetto</a>
-                <a href="#operation">Come Funziona</a>
-                <a href="#trajano">Esperienza</a>
+                <a href="#operation">Processo</a>
+                <a href="#concept">Concept</a>
+                <a href="#trajano">Bio</a>
                 <a href="#marketing">Marketing</a>
                 <a href="#partnership">Investimento</a>
             </nav>
@@ -32,12 +33,13 @@
     </header>
 
     <main id="app">
-        <!-- 1. Hero Re-Structured V4 -->
-        <section class="hero-v4" id="intro">
+        <!-- 1. Hero V8 -->
+        <section class="hero-v8" id="intro">
+            <div class="blob-bg hero-blob"></div>
             <div class="container grid-hero">
-                <div class="hero-text-side">
-                    <span class="badge">Proposta di Partnership Strategica</span>
-                    <h1>Progetto <span class="text-green">Muoviti</span>:<br>Cardio Dance Brasil</h1>
+                <div class="hero-text-side reveal-init">
+                    <span class="badge">Partnership Strategica</span>
+                    <h1>Progetto <span class="text-orange">Muoviti</span>:<br>Cardio Dance Brasil</h1>
                     <p class="subtitle">Evento Settimanale per incrementare l'affluenza e il coinvolgimento dei clienti.
                     </p>
                     <p class="intro-text">Questa proposta nasce dall'interesse reciproco nell'esplorare nuove modalità
@@ -48,250 +50,257 @@
                         <a href="#partnership" class="btn btn-outline">Modello Business</a>
                     </div>
                 </div>
-                <div class="hero-image-side">
-                    <div class="image-box shadow-lg">
-                        <img src="./assets/hero-v3.jpg" alt="Evento Cardio Dance Brasil - Shopping Impact">
-                        <div class="image-label">Successo Reale in Shopping Center</div>
+                <div class="hero-image-side reveal-init">
+                    <div class="blob-container">
+                        <div class="blob-mask">
+                            <img src="./assets/hero-v3.jpg" alt="Evento Cardio Dance Brasil">
+                        </div>
+                        <div class="floating-badge">Successo Reale in Shopping Center</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. Operazione App V6 -->
+        <!-- 2. Operazione V8 -->
         <section class="section-operation bg-light" id="operation">
             <div class="container">
-                <div class="section-header text-center">
-                    <h2>Gestione Digitale e <span class="text-orange">Flusso Operativo</span></h2>
-                    <p>Tutto il progetto è gestito in modo intelligente attraverso una <strong>App dedicata</strong>,
-                        garantendo sicurezza e controllo totale.</p>
+                <div class="section-header reveal-init">
+                    <span class="label">Sinergia Digitale</span>
+                    <h2>Gestione Digitale e <br><span class="text-orange">Flusso Operativo</span></h2>
+                    <p class="section-sub">Tutto il progetto è gestito in modo intelligente attraverso uma <strong>App
+                            dedicata</strong>, garantendo sicurezza e controllo totale.</p>
                 </div>
 
-                <div class="operation-flow">
-                    <div class="flow-step">
+                <div class="operation-grid">
+                    <div class="flow-step reveal-init">
+                        <div class="step-num">01</div>
                         <div class="step-icon">📱</div>
-                        <h4>1. Inserimento App</h4>
+                        <h4>Inserimento App</h4>
                         <p>Il partecipante scarica l'app ufficiale del progetto Muoviti per registrarsi.</p>
                     </div>
-                    <div class="flow-arrow">➜</div>
-                    <div class="flow-step">
+                    <div class="flow-step reveal-init">
+                        <div class="step-num">02</div>
                         <div class="step-icon">📝</div>
-                        <h4>2. Liberatoria & Tassa</h4>
+                        <h4>Liberatoria & Tassa</h4>
                         <p>Si firma la liberatoria digitale e si paga la quota d'iscrizione all'Associazione.</p>
                     </div>
-                    <div class="flow-arrow">➜</div>
-                    <div class="flow-step">
+                    <div class="flow-step reveal-init">
+                        <div class="step-num">03</div>
                         <div class="step-icon">👕</div>
-                        <h4>3. Kit Progetto</h4>
+                        <h4>Kit Progetto</h4>
                         <p>L'utente riceve la maglietta ufficiale, diventando un "ambasciatore" del Katanè.</p>
                     </div>
                 </div>
 
-                <div class="partner-pickup-box bg-white shadow-md">
-                    <div class="partner-text">
+                <div class="pickup-banner reveal-init">
+                    <div class="banner-content">
                         <h3>Partnership con i Negozi Interni</h3>
                         <p>Sinergia pura: i partecipanti, dopo l'iscrizione sull'App, dovranno recarsi presso un
                             <strong>negozio partner interno</strong> al Katanè per ritirare la propria maglietta,
-                            presentando il voucher digitale. Questo genera traffico immediato e qualificato per i vostri
+                            apresentando o voucher digital. Questo gera tráfego imediato e qualificado para os vossos
                             tenant.</p>
                     </div>
-                    <div class="partner-visual">
-                        <img src="./assets/shirt-kit.jpg" alt="Kit Maglietta Muoviti" class="app-mockup shadow-sm">
+                    <div class="banner-image">
+                        <img src="./assets/shirt-kit.jpg" alt="Kit Maglietta Muoviti">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. Concept - RESTORED V3 STRUCTURE -->
+        <!-- 3. Concept V8 -->
         <section class="section-concept" id="concept">
-            <div class="container grid">
-                <div class="concept-visual">
-                    <video controls poster="./assets/port-15.jpg" class="video-main shadow-lg">
-                        <source src="./assets/videos/aula.mp4" type="video/mp4">
-                    </video>
-                    <p class="video-caption margin-v6">Video registrato presso il Via Vale Garden Shopping a
-                        Taubaté/Brasile</p>
-                </div>
-                <div class="concept-text">
-                    <h2>Il Concept: <span class="text-blue">Cardio Dance Brasil</span></h2>
-                    <p>Non è una semplice lezione di danza. È un'esperienza energetica e contagiosa progettata per
-                        essere accessibile a tutti: donne, famiglie e persone di ogni età.</p>
-
-                    <div class="benefit-list">
-                        <div class="b-item">
-                            <h4>⚡ Divertimento Garantito</h4>
-                            <p>Esercizio che combatte la sedentarietà in modo allegro.</p>
-                        </div>
-                        <div class="b-item">
-                            <h4>🤝 Senso di Community</h4>
-                            <p>Un appuntamento fisso che fidelizza il cliente al centro commerciale.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Partner & Bio - RESTORED V3 + V6 Stack -->
-        <section class="section-partner bg-light" id="trajano">
             <div class="container">
-                <div class="section-header text-center" style="margin-bottom: 3rem;">
-                    <h2>Il Partner d'Eccellenza</h2>
-                    <p>La professionalità della <strong>ASD Muoviti</strong> unita all'esperienza internazionale.</p>
-                </div>
-
-                <div class="trajano-bio grid-bio" style="background: transparent; box-shadow: none; padding: 0;">
-                    <div class="bio-text">
-                        <h3>Trajano Ferrari</h3>
-                        <p class="bio-intro">Trajano Ferrari è un punto di referência nella creazione e produzione di
-                            grandi eventi, avendo già collaborato con i più importanti centri commerciali in Brasile.
-                        </p>
-
-                        <div class="portfolio-highlight">
-                            <h4>Successi Certificati:</h4>
-                            <ul class="mall-tags">
-                                <li>Taubaté Shopping</li>
-                                <li>Via Vale Garden Shopping</li>
-                                <li>Pátio Pinda Shopping</li>
-                            </ul>
+                <div class="grid-concept">
+                    <div class="concept-visual reveal-init">
+                        <div class="video-wrapper shadow-premium">
+                            <video controls poster="./assets/port-15.jpg" class="video-main">
+                                <source src="./assets/videos/aula.mp4" type="video/mp4">
+                            </video>
                         </div>
-                        <p>Gestione professionale tramite <strong>ASD Muoviti</strong>, con copertura assicurativa
-                            Libertas e iscrizione semplificata via App.</p>
+                        <p class="video-caption"
+                            style="margin-top: 1.5rem; font-style: italic; color: var(--text-muted);">Video registrato
+                            presso il Via Vale Garden Shopping a Taubaté/Brasile</p>
                     </div>
-                    <div class="bio-visuals">
-                        <div class="image-stack-v6">
-                            <img src="./assets/trajano-jump-v3.jpg" alt="Trajano Jumping" class="img-1">
-                            <img src="./assets/photos/trajano-aula.jpg" alt="Trajano Aula" class="img-2">
-                        </div>
-                    </div>
-                </div>
+                    <div class="concept-text reveal-init">
+                        <span class="label">Il Concept</span>
+                        <h2>Cardio Dance Brasil</h2>
+                        <p>Non è una semplice lezione di danza. È un'esperienza energetica e contagiosa progettata per
+                            essere accessibile a tutti: donne, famiglie e persone di ogni età.</p>
 
-                <!-- Entrevista TV -->
-                <div class="tv-interview-box shadow-lg">
-                    <div class="tv-video">
-                        <video controls class="video-full">
-                            <source src="./assets/videos/entrevista.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="tv-text">
-                        <h4>Autorità Midiática</h4>
-                        <p>Intervista alla Rede Vanguarda (affiliata Rede Globo), discutendo il successo del progetto
-                            nei centri commerciali.</p>
-                        <div class="spacer-v6"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Marketing V6 -->
-        <section class="section-marketing bg-dark" id="marketing">
-            <div class="container">
-                <div class="marketing-intro text-center">
-                    <h2>Piano di Marketing <span class="text-orange">"Chiavi in Mano"</span></h2>
-                    <p>Una strategia di comunicazione massiccia per garantire il successo del lancio.</p>
-                </div>
-
-                <div class="marketing-grid-detailed">
-                    <div class="m-card">
-                        <div class="m-header green">Produzione Creativa</div>
-                        <div class="m-body">
-                            <p>Identità visiva completa, grafiche social, video promozionali e fotografia professionale
-                                inclusi nel progetto per comunicare eccellenza.</p>
-                        </div>
-                    </div>
-                    <div class="m-card highlight">
-                        <div class="m-header yellow">Suggerimento Punto Vendita</div>
-                        <div class="m-body">
-                            <p>Installazione di adesivi e flyer informativi all'interno del centro commerciale.
-                                <strong>Nota:</strong> I costi vivi di produzione sono a carico del Katanè.</p>
-                            <div class="mkt-examples-v6">
-                                <div class="mkt-item">
-                                    <img src="./assets/mkt-1.jpg" alt="Display Informativo">
-                                    <span>Display informativo</span>
-                                </div>
-                                <div class="mkt-item">
-                                    <img src="./assets/mkt-2.jpg" alt="Arte Grafica">
-                                    <span>Arte grafica promozionale</span>
-                                </div>
+                        <div class="benefit-list">
+                            <div class="b-item reveal-init">
+                                <h4>⚡ Divertimento Garantito</h4>
+                                <p>Esercizio che combatte la sedentarietà in modo allegro.</p>
+                            </div>
+                            <div class="b-item reveal-init">
+                                <h4>🤝 Senso di Community</h4>
+                                <p>Un appuntamento fisso che fidelizza il cliente al centro commerciale.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="m-card">
-                        <div class="m-header blue">Sinergia Digitale</div>
-                        <div class="m-body">
-                            <p>Suggerimento operativo: utilizzo della mailing list del Katanè e dei canali ufficiali,
-                                supportati dalla nostra assessoria stampa per contattare TV, radio e siti di eventi
-                                locali a Catania.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Bio V8 -->
+        <section class="section-bio bg-light" id="trajano">
+            <div class="container">
+                <div class="grid-bio">
+                    <div class="bio-text reveal-init">
+                        <span class="label">Experience</span>
+                        <h2>Partner d'Eccellenza</h2>
+                        <h3>Trajano Ferrari</h3>
+                        <p style="margin: 1.5rem 0;">Trajano Ferrari è un punto di referência nella creazione e
+                            produzione di grandi eventi, avendo già collaborato con i più importanti centri commerciali
+                            in Brasile.</p>
+
+                        <div class="portfolio-tags reveal-init" style="margin-bottom: 2rem;">
+                            <span class="badge">Taubaté Shopping</span>
+                            <span class="badge">Via Vale Garden</span>
+                            <span class="badge">Pátio Pinda</span>
                         </div>
+
+                        <p>Gestione professionale tramite <strong>ASD Muoviti</strong>, con copertura assicurativa
+                            Libertas e iscrizione semplificata via App.</p>
+                    </div>
+                    <div class="bio-visuals reveal-init">
+                        <div class="image-stack-v8">
+                            <img src="./assets/trajano-jump-v3.jpg" alt="Trajano Jump" class="stack-img img-main">
+                            <img src="./assets/photos/trajano-aula.jpg" alt="Trajano Aula" class="stack-img img-sub">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tv-interview-box reveal-init shadow-premium"
+                    style="background: white; border-radius: var(--radius-lg); overflow: hidden; margin-top: 6rem; display: grid; grid-template-columns: 1fr 1fr; align-items: center;">
+                    <div class="tv-video">
+                        <video controls style="width: 100%; display: block;">
+                            <source src="./assets/videos/entrevista.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tv-text" style="padding: 4rem;">
+                        <span class="label">Media</span>
+                        <h3>Autorità Midiática</h3>
+                        <p>Intervista alla Rede Vanguarda (affiliata Rede Globo), discutendo o successo do projeto nei
+                            centri commerciali.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Portfólio V6 -->
-        <section class="section-portfolio">
+        <!-- 5. Marketing V8 -->
+        <section class="section-marketing bg-dark" id="marketing">
+            <div class="container">
+                <div class="section-header reveal-init">
+                    <span class="label" style="color: var(--brand-orange-light);">Strategia</span>
+                    <h2 style="color: white;">Piano di Marketing <span class="text-orange">"Chiavi in Mano"</span></h2>
+                    <p style="color: rgba(255,255,255,0.7);">Una strategia di comunicazione massiccia per garantire il
+                        successo del lancio.</p>
+                </div>
+
+                <div class="marketing-grid">
+                    <div class="m-card reveal-init">
+                        <span class="m-header orange">Produzione Creazione</span>
+                        <p>Identità visiva completa, grafiche social, video promozionali e fotografia professionale
+                            inclusi nel projeto per comunicare eccellenza.</p>
+                    </div>
+                    <div class="m-card reveal-init"
+                        style="grid-column: span 1; background: var(--bg-soft); color: var(--text-dark);">
+                        <span class="m-header orange">Punto Vendita</span>
+                        <p>Installazione di adesivi e flyer informativi all'interno do centro commerciale.
+                            <strong>Nota:</strong> I costi vivi di produzione sono a carico do Katanè.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <img src="./assets/mkt-1.jpg" alt="MKT 1"
+                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                            <img src="./assets/mkt-2.jpg" alt="MKT 2"
+                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <div class="m-card reveal-init">
+                        <span class="m-header orange">Sinergia Digitale</span>
+                        <p>Utilizzo della mailing list do Katanè e dei canali ufficiali, supportati dalla nostra
+                            assessoria stampa per contattare TV, radio e siti di eventi locali a Catania.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Portfolio Portfolio V8 -->
+        <section class="portfolio-v8">
             <div class="container text-center">
-                <h2>Oltre 10 anni di Successi</h2>
-                <p class="carousel-hint">Passa il mouse sopra le sezioni per scoprire i nostri successi</p>
-                <div class="hover-carousel">
-                    <div class="carousel-main shadow-lg">
+                <div class="section-header reveal-init" style="margin: 0 auto 4rem;">
+                    <span class="label">History</span>
+                    <h2 style="color: white;">Oltre 10 anni di Successi</h2>
+                    <p style="color: rgba(255,255,255,0.6);">Passa il mouse sopra as sezioni per scoprire os nossos
+                        sucessos</p>
+                </div>
+
+                <div class="hover-carousel reveal-init">
+                    <div class="carousel-main shadow-premium">
                         <img src="./assets/port-15.jpg" alt="Portfolio" id="carousel-img-main">
                     </div>
-                    <div class="carousel-nav">
-                        <div class="trigger" onmouseover="changeImg('./assets/port-15.jpg')"></div>
-                        <div class="trigger" onmouseover="changeImg('./assets/port-23.jpg')"></div>
-                        <div class="trigger" onmouseover="changeImg('./assets/port-14.jpg')"></div>
-                        <div class="trigger" onmouseover="changeImg('./assets/port-11.jpg')"></div>
-                        <div class="trigger" onmouseover="changeImg('./assets/port-5.jpg')"></div>
+                    <div class="carousel-nav"
+                        style="display: flex; justify-content: center; gap: 10px; margin-top: 2rem;">
+                        <span class="dot" onmouseover="changeImg('./assets/port-15.jpg')"
+                            style="width: 12px; height: 12px; background: white; border-radius: 50%; cursor: pointer;"></span>
+                        <span class="dot" onmouseover="changeImg('./assets/port-23.jpg')"
+                            style="width: 12px; height: 12px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer;"></span>
+                        <span class="dot" onmouseover="changeImg('./assets/port-14.jpg')"
+                            style="width: 12px; height: 12px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer;"></span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 6. Investimento - RESTORED V3 STRUCTURE -->
-        <section class="section-investment" id="partnership">
-            <div class="container grid">
-                <div class="investment-text">
-                    <h2>Modello di Partnership</h2>
-                    <p>Un modello trasparente con um eccellente rapporto costo-beneficio.</p>
-                    <div class="pricing-card shadow-lg">
-                        <div class="p-header">Investimento Strategico</div>
-                        <div class="p-amount">€150 <span class="per">/ lezione</span></div>
-                        <p class="contract">*Contratto Iniziale: Minimo 3 mesi.</p>
-                        <hr>
-                        <div class="zero-cost-section">
-                            <div class="z-badge">Opportunità a Costo Zero</div>
-                            <p>Ricerca attiva di sponsor per co-finanziare il costo. Gli sponsor ottengono visibilità e
-                                diventano punti di ritiro ufficiali.</p>
+        <!-- 7. Investment V8 -->
+        <section class="investment-v8" id="partnership">
+            <div class="container">
+                <div class="pricing-card reveal-init shadow-premium">
+                    <div class="grid-hero" style="grid-template-columns: 1fr 1fr; gap: 4rem;">
+                        <div class="inv-text">
+                            <span class="label" style="color: var(--brand-orange-light);">Partnership</span>
+                            <h2 style="color: white;">Investimento Strategico</h2>
+                            <div class="p-amount">€150 <span>/ lezione</span></div>
+                            <p style="color: rgba(255,255,255,0.6); margin-top: 1rem;">*Contratto Iniziale: Minimo 3
+                                mesi.</p>
+                            <div
+                                style="margin-top: 3rem; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-md);">
+                                <h4 style="color: var(--brand-orange-light); margin-bottom: 1rem;">Opportunità a Costo
+                                    Zero</h4>
+                                <p style="color: white;">Ricerca attiva di sponsor per co-finanziare o costo. Gli
+                                    sponsor ottengono visibilità e diventano punti di ritiro ufficiali.</p>
+                            </div>
+                        </div>
+                        <div class="inv-details"
+                            style="background: white; color: var(--text-dark); padding: 3rem; border-radius: var(--radius-lg);">
+                            <h3 style="margin-bottom: 2rem;">Logistica & Struttura</h3>
+                            <ul style="list-style: none; line-height: 2;">
+                                <li>📍 <strong>Frequenza:</strong> Ogni lunedì (giorno strategico)</li>
+                                <li>⏰ <strong>Orario:</strong> 19:30 – 20:30</li>
+                                <li>🏢 <strong>Luogo:</strong> Area eventi interna (Katanè)</li>
+                            </ul>
+                            <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                                <h4 style="margin-bottom: 1rem;">Necessità Tecniche:</h4>
+                                <p>✅ Palco/Pedana (minimo 3x2m)</p>
+                                <p>✅ Impianto audio con microfono headset</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="execution-logistics">
-                    <div class="logistics-card shadow-md">
-                        <h3>Logistica & Struttura</h3>
-                        <ul class="log-info">
-                            <li>📍 <strong>Frequenza:</strong> Ogni lunedì (giorno strategico)</li>
-                            <li>⏰ <strong>Orario:</strong> 19:30 – 20:30</li>
-                            <li>🏢 <strong>Luogo:</strong> Area eventi interna (Katanè)</li>
-                        </ul>
-                        <hr>
-                        <h4>Necessità Tecniche:</h4>
-                        <ul style="list-style: none; margin-top: 1rem; font-weight: 700;">
-                            <li>✅ Palco/Pedana (minimo 3x2m)</li>
-                            <li>✅ Impianto audio con microfono headset</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- Final V7 -->
-        <section class="section-final text-center" style="padding: 100px 0;">
-            <div class="container">
+        <!-- Final V8 -->
+        <section class="section-final text-center">
+            <div class="container reveal-init">
+                <span class="label">Ready?</span>
                 <h2>Portiamo l'Energia del Brasile al Katanè?</h2>
-                <a href="#" class="btn btn-primary">Richiedi Incontro Personale</a>
-                <div style="margin-top: 4rem;">
-                    <img src="./assets/logo-muoviti.jpg" alt="Muoviti Logo" class="mini-logo-v6">
-                    <p style="font-weight: 800;">Trajano Ferrari</p>
-                    <p style="color: var(--text-muted);">Fondatore ASD Muoviti</p>
+                <a href="mailto:trajano.ferrari@gmail.com" class="btn btn-primary">Richiedi Incontro Personale</a>
+
+                <div style="margin-top: 5rem;">
+                    <img src="./assets/logo-muoviti.jpg" alt="Muoviti Logo" style="height: 60px; margin-bottom: 1rem;">
+                    <h4 style="margin-bottom: 0.5rem;">Trajano Ferrari</h4>
+                    <p>Fondatore ASD Muoviti</p>
                 </div>
             </div>
         </section>
