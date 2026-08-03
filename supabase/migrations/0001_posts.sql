@@ -26,8 +26,15 @@ create policy "public read published"
   using (pubblicato = true);
 
 -- Scrittura e lettura completa: solo autenticato.
--- Nota: serve anche `with check`, altrimenti INSERT e UPDATE vengono
+--
+-- Nota 1: serve anche `with check`, altrimenti INSERT e UPDATE vengono
 -- rifiutati (su INSERT Postgres valuta `with check`, non `using`).
+--
+-- Nota 2: questa policy vale per QUALSIASI utente autenticato. È sicura
+-- solo se la registrazione pubblica è disattivata e l'unico utente è
+-- quello creato a mano per /admin. Vedi README, sezione Supabase.
+-- Irrobustimento consigliato una volta creato l'utente: sostituire
+-- `using (true)` / `with check (true)` con `auth.uid() = '<uid-admin>'`.
 drop policy if exists "auth full access" on posts;
 create policy "auth full access"
   on posts for all

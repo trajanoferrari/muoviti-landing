@@ -84,26 +84,61 @@ public/
 
 ## Supabase
 
-Le migrazioni in `supabase/migrations/` sono idempotenti: si possono
-incollare nel *SQL Editor* del progetto in ordine.
+Progetto già creato e migrato:
+
+| | |
+|---|---|
+| Nome | `trajanoferrari-it` |
+| Regione | `eu-central-1` (Francoforte) |
+| URL | `https://xjtwzhavbyiiwsivvcst.supabase.co` |
+| Piano | free, 0 €/mese |
+
+Le migrazioni in `supabase/migrations/` sono già applicate. Sono
+idempotenti: si possono rieseguire nel *SQL Editor* senza danni.
 
 - `0001_posts.sql` — tabella `posts` + RLS
 - `0002_storage_blog.sql` — bucket `blog` + policy
 
-Poi creare **a mano** l'utente unico di `/admin`:
-*Authentication → Users → Add user* (email + password, conferma automatica).
-Non c'è registrazione pubblica: `/admin` ha un solo utente.
+Verificato sul database, impersonando i ruoli:
 
-### Due correzioni rispetto allo SQL del briefing
+- `anon` legge solo i post con `pubblicato = true` ✓
+- `anon` in scrittura viene rifiutato ✓
+- `authenticated` inserisce ✓
+
+### ⚠️ Da fare a mano, prima di andare online
+
+1. **Disattivare la registrazione pubblica.**
+   *Authentication → Sign In / Providers → Email → “Allow new users to
+   sign up”: off.* Supabase la lascia **attiva** per default, e la policy
+   di scrittura vale per qualsiasi utente autenticato: con la
+   registrazione aperta, chiunque potrebbe iscriversi e ottenere accesso
+   in scrittura al diario. Questo è il punto più importante dei due.
+2. **Creare l'utente unico di `/admin`.**
+   *Authentication → Users → Add user*, con “auto confirm”. La password
+   non deve passare da qui.
+
+Dopo il punto 2, irrobustimento consigliato: sostituire nella policy
+`auth full access` i `true` con `auth.uid() = '<uid-dell-utente>'`. Così
+la scrittura è legata a quell'utente e non al ruolo in generale.
+
+### Tre correzioni rispetto allo SQL del briefing
 
 1. **`with check` sulla policy autenticata.** Il briefing scriveva
    `for all using (auth.role() = 'authenticated')`. Su `INSERT` Postgres
    valuta `with check`, non `using`: senza `with check` la policy passa i
    `SELECT` ma **rifiuta ogni inserimento**, e `/admin` non riuscirebbe a
    pubblicare. Aggiunto `with check (true)`.
+   Verificato sul database: con la policy nella forma del briefing,
+   l'`INSERT` come `authenticated` viene rifiutato; con `with check`
+   passa.
 2. **`to authenticated` invece di `auth.role()`.** `auth.role()` è
    deprecato; il target di ruolo nativo fa la stessa cosa ed è più veloce
    (valutato prima della riga, non per riga).
+3. **Nessun SELECT pubblico sul bucket `blog`.** Il bucket è `public`,
+   quindi gli URL degli oggetti si aprono già senza policy: aprire il
+   `SELECT` ad `anon` avrebbe aggiunto solo la possibilità di elencare
+   tutti i file caricati. Il `SELECT` resta agli autenticati, per la
+   lista in `/admin`.
 
 ---
 
@@ -163,6 +198,14 @@ Senza questi punti il sito non va online:
 1. [ ] Scaricare i 12 reel in MP4 e indicare quale va in quale sezione
 2. [ ] Selezionare le foto: 1 hero · 3 Chi sono · 1 Percorso
 3. [ ] Confermare la media di iscritte fuori dall'estate, se supera 18
-4. [ ] Creare il progetto Supabase e generare le due chiavi
+4. [x] ~~Creare il progetto Supabase e generare le due chiavi~~ — fatto
 5. [ ] Confermare il numero WhatsApp del CTA
    *(nel vecchio sito c'era solo `trajano.ferrari@gmail.com`, nessun numero)*
+
+Aggiunte in fase 0:
+
+6. [ ] Disattivare la registrazione pubblica su Supabase *(vedi sopra —
+   è la voce più urgente della lista)*
+7. [ ] Creare l'utente unico di `/admin`
+8. [ ] Collegare il repo a Netlify e impostare le due variabili
+9. [ ] Ricodificare i due video: 25 MB e 19 MB sono troppi per il 4G
