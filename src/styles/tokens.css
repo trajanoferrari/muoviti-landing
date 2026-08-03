@@ -1,16 +1,16 @@
 /* ─────────────────────────────────────────────────────────────
-   tokens.css — unica fonte di colore e tipografia.
-   Nessun hex sciolto altrove nel CSS: tutto deriva da qui.
+   tokens.css — única fonte de cor e tipografia.
+   Nenhum hex solto em outro lugar do CSS: tudo deriva daqui.
 
-   VUOTO DI PROPOSITO. Si compila nella FASE 2 (skill FRONTEND-DESIGN),
-   dopo che PLANO.md ha fissato palette, famiglie e scala.
-   Vedi briefing, parte 2.3.
+   VAZIO DE PROPÓSITO. Preenchido na FASE 2 (skill FRONTEND-DESIGN),
+   depois que o PLANO.md fixar paleta, famílias e escala.
+   Ver briefing, parte 2.3.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  /* --- Colore: 4–6 valori nominati (fase 2) --- */
+  /* --- Cor: 4 a 6 valores nomeados (fase 2) --- */
 
-  /* --- Tipografia: display, corpo, utility (fase 2) --- */
+  /* --- Tipografia: display, corpo, utilitária (fase 2) --- */
 
-  /* --- Scala: contrasto reale fra display e corpo (fase 2) --- */
+  /* --- Escala: contraste real entre display e corpo (fase 2) --- */
 }

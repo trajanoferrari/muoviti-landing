@@ -5,8 +5,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://trajanoferrari.it',
 
-  // Sito statico. Nessun framework UI, nessuna integrazione.
-  // Il diario legge da Supabase lato client, quindi non serve SSR:
-  // un post nuovo appare senza rebuild.
+  // Site estático. Sem framework de UI, sem integrações.
+  // O diário lê do Supabase no navegador, então não precisa de SSR:
+  // um post novo aparece sem rebuild.
   output: 'static',
 });

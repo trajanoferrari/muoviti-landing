@@ -1,5 +1,6 @@
--- Diario: tabella dei post + RLS.
--- Schema come da briefing 5.3, con due correzioni segnalate nel README.
+-- Diário: tabela dos posts + RLS (Row Level Security).
+-- Schema conforme o briefing 5.3, com as correções explicadas no README.
+-- Os nomes das colunas ficam em italiano, como definido no briefing.
 
 create table if not exists posts (
   id           uuid primary key default gen_random_uuid(),
@@ -13,28 +14,28 @@ create table if not exists posts (
   created_at   timestamptz default now()
 );
 
--- La home e /diario ordinano per data discendente.
+-- A home e /diario ordenam por data decrescente.
 create index if not exists posts_created_at_idx on posts (created_at desc);
 
 alter table posts enable row level security;
 
--- Lettura pubblica: solo quello che è pubblicato.
+-- Leitura pública: só o que está publicado.
 drop policy if exists "public read published" on posts;
 create policy "public read published"
   on posts for select
   to anon, authenticated
   using (pubblicato = true);
 
--- Scrittura e lettura completa: solo autenticato.
+-- Leitura e escrita completas: só autenticado.
 --
--- Nota 1: serve anche `with check`, altrimenti INSERT e UPDATE vengono
--- rifiutati (su INSERT Postgres valuta `with check`, non `using`).
+-- Nota 1: precisa também do `with check`, senão INSERT e UPDATE são
+-- recusados (no INSERT o Postgres avalia `with check`, não `using`).
 --
--- Nota 2: questa policy vale per QUALSIASI utente autenticato. È sicura
--- solo se la registrazione pubblica è disattivata e l'unico utente è
--- quello creato a mano per /admin. Vedi README, sezione Supabase.
--- Irrobustimento consigliato una volta creato l'utente: sostituire
--- `using (true)` / `with check (true)` con `auth.uid() = '<uid-admin>'`.
+-- Nota 2: esta policy vale para QUALQUER usuário autenticado. Só é segura
+-- se o cadastro público estiver desativado e o único usuário for o criado
+-- à mão para o /admin. Ver README, seção Supabase.
+-- Reforço recomendado depois de criar o usuário: trocar `using (true)` e
+-- `with check (true)` por `auth.uid() = '<uid-do-admin>'`.
 drop policy if exists "auth full access" on posts;
 create policy "auth full access"
   on posts for all

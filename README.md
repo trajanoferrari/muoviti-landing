@@ -1,49 +1,50 @@
 # trajanoferrari.it
 
-Sito di Trajano Ferrari — Cardio Dance Brasil, Catania.
-Pubblico di riferimento: titolari e direttori tecnici di palestra a Catania.
-Azione unica: chiamare o scrivere su WhatsApp.
+Site do Trajano Ferrari — Cardio Dance Brasil, Catania.
+Público-alvo: donos e diretores técnicos de academia em Catania.
+Ação única: ligar ou mandar mensagem no WhatsApp.
 
-Lingua del sito: **solo italiano**.
+**Idioma:** o site é **só em italiano**. Esta documentação e os
+comentários do código são em português.
 
 ---
 
 ## Stack
 
-| Livello | Scelta |
+| Camada | Escolha |
 |---|---|
-| Framework | Astro 7, TypeScript strict, nessun framework UI |
-| CSS | CSS nativo con custom properties. Nessun Tailwind |
-| Database / Auth / Storage | Supabase (piano free) |
-| Hosting | Netlify, build automatica da GitHub |
-| Video | MP4 autoospitato in `public/video`. Nessun embed Instagram |
-| Analytics | nessuno in questa versione |
+| Framework | Astro 7, TypeScript strict, sem framework de UI |
+| CSS | CSS nativo com custom properties. Sem Tailwind |
+| Banco / Auth / Storage | Supabase (plano free) |
+| Hospedagem | Netlify, build automático via GitHub |
+| Vídeo | MP4 auto-hospedado em `public/video`. Zero embed do Instagram |
+| Analytics | nenhum nesta versão |
 
-Niente embed di terze parti: pesano, si rompono quando il post cambia e
-installano cookie di terza parte — che obbligherebbero al banner GDPR.
+Sem embed de terceiro: pesa, quebra quando o post muda e instala cookie
+de terceiro — o que obrigaria a banner de consentimento GDPR.
 
 ---
 
-## Sviluppo locale
+## Rodar na sua máquina
 
 ```bash
 npm install
-cp .env.example .env    # poi inserire le due chiavi Supabase
-npm run dev             # http://localhost:4321
+cp .env.example .env    # depois preencher as duas chaves do Supabase
+npm run dev             # abre em http://localhost:4321
 ```
 
-| Comando | Cosa fa |
+| Comando | O que faz |
 |---|---|
-| `npm run dev` | server di sviluppo |
-| `npm run build` | build statica in `dist/` |
-| `npm run preview` | serve `dist/` in locale |
-| `npm run check` | typecheck di Astro + TypeScript |
+| `npm run dev` | servidor de desenvolvimento |
+| `npm run build` | gera o site final em `dist/` |
+| `npm run preview` | serve o `dist/` localmente |
+| `npm run check` | verifica erros de tipo (Astro + TypeScript) |
 
 ---
 
-## Variabili d'ambiente
+## Variáveis de ambiente
 
-Servono in `.env` in locale **e** su Netlify
+Precisam existir no `.env` local **e** no Netlify
 (*Site configuration → Environment variables*):
 
 ```
@@ -51,31 +52,31 @@ PUBLIC_SUPABASE_URL=
 PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-Sono `PUBLIC_` perché il client Supabase gira nel browser: la chiave anon è
-pensata per essere esposta. Quello che protegge i dati è la RLS, non il
-segreto della chiave. La `service_role` non entra mai in questo repo.
+São `PUBLIC_` porque o cliente Supabase roda no navegador: a chave anon
+foi feita para ser exposta. O que protege os dados é a RLS, não o sigilo
+da chave. A chave `service_role` nunca entra neste repositório.
 
 ---
 
-## Struttura
+## Estrutura
 
 ```
 src/
   pages/
     index.astro           ← home (fase 2)
-    diario/index.astro    ← elenco post (fase 4)
-    diario/[slug].astro   ← post singolo (fase 4)
+    diario/index.astro    ← lista de posts (fase 4)
+    diario/[slug].astro   ← post individual (fase 4)
     admin/index.astro     ← login + editor (fase 4)
-  components/             ← una sezione per componente (fase 2)
+  components/             ← uma seção por componente (fase 2)
   styles/
-    tokens.css            ← unica fonte di colore e tipografia
-    base.css              ← reset e basi di accessibilità
+    tokens.css            ← única fonte de cor e tipografia
+    base.css              ← reset e bases de acessibilidade
   lib/
-    supabase.ts           ← client + tipo Post + slugify
-    countUp.ts            ← contatore numeri (fase 3)
-    reveal.ts             ← reveal di sezione (fase 3)
+    supabase.ts           ← cliente + tipo Post + slugify
+    countUp.ts            ← contador dos números (fase 3)
+    reveal.ts             ← reveal de seção (fase 3)
 supabase/
-  migrations/             ← schema, da applicare sul progetto
+  migrations/             ← schema do banco, já aplicado
 public/
   img/  video/  robots.txt
 ```
@@ -84,128 +85,128 @@ public/
 
 ## Supabase
 
-Progetto già creato e migrato:
+Projeto já criado e migrado:
 
 | | |
 |---|---|
 | Nome | `trajanoferrari-it` |
-| Regione | `eu-central-1` (Francoforte) |
+| Região | `eu-central-1` (Frankfurt) |
 | URL | `https://xjtwzhavbyiiwsivvcst.supabase.co` |
-| Piano | free, 0 €/mese |
+| Plano | free, € 0/mês |
 
-Le migrazioni in `supabase/migrations/` sono già applicate. Sono
-idempotenti: si possono rieseguire nel *SQL Editor* senza danni.
+As migrações em `supabase/migrations/` já estão aplicadas. São
+idempotentes: podem ser rodadas de novo no *SQL Editor* sem estragar
+nada.
 
-- `0001_posts.sql` — tabella `posts` + RLS
-- `0002_storage_blog.sql` — bucket `blog` + policy
+- `0001_posts.sql` — tabela `posts` + RLS
+- `0002_storage_blog.sql` — bucket `blog` + policies
 
-Verificato sul database, impersonando i ruoli:
+Testado direto no banco, assumindo cada papel:
 
-- `anon` legge solo i post con `pubblicato = true` ✓
-- `anon` in scrittura viene rifiutato ✓
-- `authenticated` inserisce ✓
+- `anon` lê apenas os posts com `pubblicato = true` ✓
+- `anon` tentando escrever é recusado ✓
+- `authenticated` consegue inserir ✓
 
-### ⚠️ Da fare a mano, prima di andare online
+### ⚠️ Dois passos manuais, antes de o site ir ao ar
 
-1. **Disattivare la registrazione pubblica.**
+1. **Desativar o cadastro público.**
    *Authentication → Sign In / Providers → Email → “Allow new users to
-   sign up”: off.* Supabase la lascia **attiva** per default, e la policy
-   di scrittura vale per qualsiasi utente autenticato: con la
-   registrazione aperta, chiunque potrebbe iscriversi e ottenere accesso
-   in scrittura al diario. Questo è il punto più importante dei due.
-2. **Creare l'utente unico di `/admin`.**
-   *Authentication → Users → Add user*, con “auto confirm”. La password
-   non deve passare da qui.
+   sign up”: desligar.* O Supabase deixa isso **ligado** por padrão, e a
+   policy de escrita vale para qualquer usuário autenticado: com o
+   cadastro aberto, qualquer pessoa poderia se registrar e ganhar acesso
+   de escrita no diário. Este é o mais importante dos dois.
+2. **Criar o usuário único do `/admin`.**
+   *Authentication → Users → Add user*, marcando “auto confirm”. A senha
+   não deve passar pelo chat.
 
-Dopo il punto 2, irrobustimento consigliato: sostituire nella policy
-`auth full access` i `true` con `auth.uid() = '<uid-dell-utente>'`. Così
-la scrittura è legata a quell'utente e non al ruolo in generale.
+Depois do passo 2, reforço recomendado: na policy `auth full access`,
+trocar os `true` por `auth.uid() = '<uid-do-usuário>'`. Assim a escrita
+fica amarrada àquele usuário, e não ao papel em geral.
 
-### Tre correzioni rispetto allo SQL del briefing
+### Três correções em relação ao SQL do briefing
 
-1. **`with check` sulla policy autenticata.** Il briefing scriveva
-   `for all using (auth.role() = 'authenticated')`. Su `INSERT` Postgres
-   valuta `with check`, non `using`: senza `with check` la policy passa i
-   `SELECT` ma **rifiuta ogni inserimento**, e `/admin` non riuscirebbe a
-   pubblicare. Aggiunto `with check (true)`.
-   Verificato sul database: con la policy nella forma del briefing,
-   l'`INSERT` come `authenticated` viene rifiutato; con `with check`
-   passa.
-2. **`to authenticated` invece di `auth.role()`.** `auth.role()` è
-   deprecato; il target di ruolo nativo fa la stessa cosa ed è più veloce
-   (valutato prima della riga, non per riga).
-3. **Nessun SELECT pubblico sul bucket `blog`.** Il bucket è `public`,
-   quindi gli URL degli oggetti si aprono già senza policy: aprire il
-   `SELECT` ad `anon` avrebbe aggiunto solo la possibilità di elencare
-   tutti i file caricati. Il `SELECT` resta agli autenticati, per la
-   lista in `/admin`.
+1. **`with check` na policy autenticada.** O briefing escrevia
+   `for all using (auth.role() = 'authenticated')`. No `INSERT` o
+   Postgres avalia `with check`, não `using`: sem `with check` a policy
+   permite os `SELECT` mas **recusa qualquer inserção**, e o `/admin` não
+   conseguiria publicar. Adicionado `with check (true)`.
+   Verificado no banco: com a policy na forma do briefing, o `INSERT`
+   como `authenticated` é recusado; com `with check`, passa.
+2. **`to authenticated` em vez de `auth.role()`.** `auth.role()` está
+   deprecado; o alvo de papel nativo faz o mesmo e é mais rápido
+   (avaliado antes da linha, não linha por linha).
+3. **Sem SELECT público no bucket `blog`.** O bucket é `public`, então as
+   URLs dos arquivos já abrem sem policy: liberar o `SELECT` para `anon`
+   só acrescentaria a possibilidade de listar todos os arquivos enviados.
+   O `SELECT` fica com os autenticados, para a lista no `/admin`.
 
 ---
 
 ## Netlify
 
-`netlify.toml` è già configurato: build `npm run build`, publish `dist`.
-Da fare una volta sola nella dashboard:
+O `netlify.toml` já está configurado: build `npm run build`, publish
+`dist`. Falta fazer uma vez, no painel:
 
-1. *Add new site → Import from GitHub* → questo repo
-2. Impostare le due variabili d'ambiente qui sopra
-3. Collegare il dominio `trajanoferrari.it`
+1. *Add new site → Import from GitHub* → este repositório
+2. Cadastrar as duas variáveis de ambiente acima
+3. Ligar o domínio `trajanoferrari.it`
 
 ---
 
-## Fasi di costruzione
+## Fases de construção
 
-Il progetto si costruisce in 6 fasi, **una per sessione pulita**.
-Regola critica: **mai due skill di design nella stessa sessione** — si
-contraddicono su tipografia, palette e spaziatura.
+O projeto é feito em 6 fases, **uma por sessão limpa**.
+Regra crítica: **nunca duas skills de design na mesma sessão** — elas se
+contradizem sobre tipografia, paleta e espaçamento.
 
-| Fase | Skill | Consegna | Stato |
+| Fase | Skill | Entrega | Status |
 |---|---|---|---|
-| 0 · Fondazione | nessuna | repo, Astro, Supabase, Netlify | ✅ fatto |
-| 1 · Piano | `UI UX PRO MAX` | `PLANO.md`, nessun codice | da fare |
-| 2 · Visuale | `FRONTEND-DESIGN` | token + sezioni statiche | da fare |
-| 3 · Movimento | `MOTION DESIGN SKILL` | contatore, reveal, interstizi | da fare |
-| 4 · Diario | nessuna | Supabase, `/admin`, `/diario` | da fare |
-| 5 · Audit | `WEB DESIGN GUIDELINES` | report + correzioni | da fare |
-| 6 · Rifinitura | `IMPECCABLE` | togliere rumore visivo | da fare |
+| 0 · Fundação | nenhuma | repo, Astro, Supabase, Netlify | ✅ feito |
+| 1 · Plano | `UI UX PRO MAX` | `PLANO.md`, nenhum código | a fazer |
+| 2 · Visual | `FRONTEND-DESIGN` | tokens + seções estáticas | a fazer |
+| 3 · Movimento | `MOTION DESIGN SKILL` | contador, reveals, interstícios | a fazer |
+| 4 · Diário | nenhuma | Supabase, `/admin`, `/diario` | a fazer |
+| 5 · Auditoria | `WEB DESIGN GUIDELINES` | relatório + correções | a fazer |
+| 6 · Refino | `IMPECCABLE` | remoção de ruído visual | a fazer |
 
-Ogni fase si chiude con un commit. Nessuna fase parte se la precedente
-non è committata.
-
----
-
-## Debito noto, da affrontare nelle fasi successive
-
-- **I video sono troppo pesanti: `aula.mp4` 25 MB, `entrevista.mp4` 19 MB.**
-  Con `preload="none"` non toccano l'LCP, ma su 4G chi premette play
-  aspetta troppo. Da ricodificare (H.264 720p, CRF ~24, audio 96 kbps →
-  circa 2–4 MB) prima di andare online.
-- **Le immagini sono PNG/JPG non ottimizzati** (`lifestyle.png` 788 KB,
-  `hero.png` 688 KB). Da convertire in WebP nella fase 2, con `width` e
-  `height` sempre dichiarati.
-- `public/img/` contiene tutto il materiale disponibile, non la selezione
-  finale: la scelta è una pendenza di Trajano (vedi sotto).
-- `directives/` e `execution/` sono resti del vecchio flusso di
-  pacchettizzazione zip, non più usato. Si possono rimuovere quando
-  Trajano conferma che non servono.
+Cada fase termina com um commit. Nenhuma fase começa sem a anterior
+commitada.
 
 ---
 
-## Pendenze di Trajano
+## Débito conhecido, para as fases seguintes
 
-Senza questi punti il sito non va online:
+- **Os vídeos estão pesados demais: `aula.mp4` 25 MB, `entrevista.mp4`
+  19 MB.** Com `preload="none"` eles não afetam o LCP, mas quem aperta
+  play no 4G espera demais. Precisam ser recodificados (H.264 720p,
+  CRF ~24, áudio 96 kbps → algo entre 2 e 4 MB) antes de ir ao ar.
+- **As imagens são PNG/JPG não otimizados** (`lifestyle.png` 788 KB,
+  `hero.png` 688 KB). Converter para WebP na fase 2, sempre com `width`
+  e `height` declarados.
+- `public/img/` contém todo o material disponível, não a seleção final:
+  escolher é pendência do Trajano (ver abaixo).
+- `directives/` e `execution/` são restos do antigo fluxo de empacotar
+  zip, que não é mais usado. Podem ser removidos quando o Trajano
+  confirmar que não servem mais.
 
-1. [ ] Scaricare i 12 reel in MP4 e indicare quale va in quale sezione
-2. [ ] Selezionare le foto: 1 hero · 3 Chi sono · 1 Percorso
-3. [ ] Confermare la media di iscritte fuori dall'estate, se supera 18
-4. [x] ~~Creare il progetto Supabase e generare le due chiavi~~ — fatto
-5. [ ] Confermare il numero WhatsApp del CTA
-   *(nel vecchio sito c'era solo `trajano.ferrari@gmail.com`, nessun numero)*
+---
 
-Aggiunte in fase 0:
+## Pendências do Trajano
 
-6. [ ] Disattivare la registrazione pubblica su Supabase *(vedi sopra —
-   è la voce più urgente della lista)*
-7. [ ] Creare l'utente unico di `/admin`
-8. [ ] Collegare il repo a Netlify e impostare le due variabili
-9. [ ] Ricodificare i due video: 25 MB e 19 MB sono troppi per il 4G
+Sem estes itens o site não vai ao ar:
+
+1. [ ] Baixar os 12 reels em MP4 e indicar qual entra em qual seção
+2. [ ] Selecionar as fotos: 1 hero · 3 Chi sono · 1 Percorso
+3. [ ] Confirmar a média de alunas fora do verão, se for maior que 18
+4. [x] ~~Criar projeto Supabase e gerar as duas chaves~~ — feito
+5. [ ] Confirmar o número de WhatsApp que vai no CTA
+   *(no site antigo havia só `trajano.ferrari@gmail.com`, nenhum número)*
+
+Acrescentadas na fase 0:
+
+6. [ ] Desativar o cadastro público no Supabase *(ver acima — é o item
+   mais urgente da lista)*
+7. [ ] Criar o usuário único do `/admin`
+8. [ ] Liberar escrita do repositório para o Claude no GitHub
+9. [ ] Ligar o repositório ao Netlify e cadastrar as duas variáveis
+10. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G

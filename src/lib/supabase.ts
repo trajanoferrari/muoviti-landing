@@ -5,12 +5,14 @@ const anonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
 if (!url || !anonKey) {
   throw new Error(
-    'Mancano PUBLIC_SUPABASE_URL o PUBLIC_SUPABASE_ANON_KEY. ' +
-      'Copia .env.example in .env (e impostale su Netlify).'
+    'Faltam PUBLIC_SUPABASE_URL ou PUBLIC_SUPABASE_ANON_KEY. ' +
+      'Copie .env.example para .env (e configure as duas no Netlify).'
   );
 }
 
-/** Un post del diario, come sta in tabella su Supabase. */
+// Os nomes dos campos são em italiano porque espelham as colunas da
+// tabela no Supabase, definidas assim no briefing.
+/** Um post do diário, como está na tabela do Supabase. */
 export type Post = {
   id: string;
   slug: string;
@@ -25,12 +27,12 @@ export type Post = {
 
 export const supabase = createClient(url, anonKey);
 
-/** Nome del bucket Storage per le immagini del diario. */
+/** Nome do bucket do Storage para as imagens do diário. */
 export const BUCKET = 'blog';
 
 /**
- * Slug da titolo: minuscole, accenti via, spazi in trattini.
- * Usato da /admin quando si crea un post.
+ * Slug a partir do título: minúsculas, sem acento, espaços viram hífen.
+ * Usado pelo /admin na hora de criar um post.
  */
 export function slugify(titolo: string): string {
   return titolo

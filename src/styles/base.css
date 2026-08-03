@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────
-   base.css — reset e basi di accessibilità.
-   Solo infrastruttura: nessuna decisione di design.
-   Colori e font arrivano da tokens.css nella fase 2.
+   base.css — reset e bases de acessibilidade.
+   Só infraestrutura: nenhuma decisão de design.
+   Cor e fonte vêm do tokens.css, na fase 2.
    ───────────────────────────────────────────────────────────── */
 
 *,
@@ -42,7 +42,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Titoli: interlinea stretta, niente sillabazione strana. */
+/* Títulos: entrelinha curta, sem quebra estranha. */
 h1,
 h2,
 h3,
@@ -55,8 +55,8 @@ p {
   text-wrap: pretty;
 }
 
-/* Immagini: mai oltre il contenitore, mai deformate.
-   width/height restano obbligatori nel markup (briefing 5.5). */
+/* Imagens: nunca além do contêiner, nunca deformadas.
+   width/height continuam obrigatórios no markup (briefing 5.5). */
 img,
 picture,
 video,
@@ -79,13 +79,13 @@ button {
   cursor: pointer;
 }
 
-/* Focus da tastiera sempre visibile. Il colore arriva dai token. */
+/* Foco de teclado sempre visível. A cor vem dos tokens. */
 :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
 
-/* Nascosto a schermo, leggibile dallo screen reader. */
+/* Escondido na tela, legível pelo leitor de tela. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -98,7 +98,7 @@ button {
   border: 0;
 }
 
-/* Rispettato in ogni animazione del sito (briefing 3.1, 5.5). */
+/* Respeitado em toda animação do site (briefing 3.1, 5.5). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

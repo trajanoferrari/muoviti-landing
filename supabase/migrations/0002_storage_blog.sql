@@ -1,14 +1,14 @@
--- Bucket `blog`: cover e foto extra dei post.
--- Lettura pubblica degli oggetti, scrittura solo autenticata.
+-- Bucket `blog`: capas e fotos extra dos posts.
+-- Leitura pública dos arquivos, escrita só autenticada.
 
 insert into storage.buckets (id, name, public)
 values ('blog', 'blog', true)
 on conflict (id) do update set public = true;
 
--- Nessuna policy di SELECT per `anon`: il bucket è public, quindi gli URL
--- degli oggetti si aprono già senza policy. Aprire il SELECT ad anon
--- aggiungerebbe solo la possibilità di elencare tutti i file del bucket.
--- Il SELECT serve agli autenticati, per la lista in /admin.
+-- Nenhuma policy de SELECT para `anon`: o bucket é público, então as URLs
+-- dos arquivos já abrem sem policy. Abrir o SELECT para anon só
+-- acrescentaria a possibilidade de listar todos os arquivos do bucket.
+-- O SELECT serve aos autenticados, para a lista no /admin.
 drop policy if exists "blog public read" on storage.objects;
 
 drop policy if exists "blog auth list" on storage.objects;

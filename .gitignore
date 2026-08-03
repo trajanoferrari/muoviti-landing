@@ -2,15 +2,15 @@
 dist/
 .astro/
 
-# Dipendenze
+# Dependências
 node_modules/
 
-# Ambiente — mai committare le chiavi
+# Ambiente — nunca commitar as chaves
 .env
 .env.local
 .env.production
 
-# Log e temporanei
+# Logs e temporários
 .tmp/
 *.log
 npm-debug.log*
@@ -22,5 +22,5 @@ Thumbs.db
 # Netlify
 .netlify/
 
-# Vecchio flusso di lavoro
+# Fluxo de trabalho antigo
 execution/__pycache__/
