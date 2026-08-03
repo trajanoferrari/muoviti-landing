@@ -1,0 +1,32 @@
+---
+// FASE 0 — solo infrastruttura.
+// Le sezioni (Hero, Numeri, Interstizio, ...) si costruiscono nella FASE 2.
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+const titolo = 'Trajano Ferrari — Cardio Dance Brasil a Catania';
+const descrizione =
+  'Cardio Dance Brasil a Catania. Sala piena tre mattine a settimana, tutto l’anno.';
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titolo}</title>
+    <meta name="description" content={descrizione} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titolo} />
+    <meta property="og:description" content={descrizione} />
+    <meta property="og:url" content={Astro.site} />
+    <link rel="canonical" href={Astro.site} />
+  </head>
+  <body>
+    <main>
+      <h1>Trajano Ferrari</h1>
+      <p>Cardio Dance Brasil · Catania</p>
+      <p><small>Fase 0 — fondazione. Il sito si costruisce nelle fasi 2–6.</small></p>
+    </main>
+  </body>
+</html>
