@@ -1,18 +1,26 @@
-# Arquivos temporários e logs
+# Build
+dist/
+.astro/
+
+# Dependências
+node_modules/
+
+# Ambiente — nunca commitar as chaves
+.env
+.env.local
+.env.production
+
+# Logs e temporários
 .tmp/
 *.log
 npm-debug.log*
 
-# Configurações de ambiente
-.env
-.env.local
-
-# Pastas de dependências (se houver)
-node_modules/
-
-# Arquivos de sistema
+# Sistema
 .DS_Store
 Thumbs.db
 
-# Pastas de execução interna
+# Netlify
+.netlify/
+
+# Fluxo de trabalho antigo
 execution/__pycache__/

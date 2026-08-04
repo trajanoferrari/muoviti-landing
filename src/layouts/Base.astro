@@ -1,0 +1,115 @@
+---
+// Casca de toda página: head, meta, schema.org, fontes.
+// Não está na estrutura da Parte 5.2 do briefing, mas /diario e
+// /admin vão precisar da mesma casca — duplicar o head em quatro
+// páginas é como as meta tags saem de sincronia.
+
+// Fontes auto-hospedadas. Nenhuma requisição ao Google Fonts:
+// seria script de terceiro, cookie de terceiro e banner GDPR.
+import '@fontsource-variable/archivo/wdth.css'; // eixo de largura
+import '@fontsource-variable/literata';
+// Só 500 e 600: são os dois pesos que a folha de estilo usa.
+// O 400 estava sendo baixado sem ninguém pedir.
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+import { TELEFONO, CITTA } from '../lib/contatto';
+
+interface Props {
+  titolo: string;
+  descrizione: string;
+  /** Caminho da imagem de OpenGraph, relativo à raiz. */
+  immagine?: string;
+  /** Fora do índice dos buscadores. Usado em /admin. */
+  noindex?: boolean;
+}
+
+// JPEG de propósito, não WebP: o og:image é lido por WhatsApp,
+// Facebook e afins, e o suporte a WebP em preview é irregular.
+// Como o CTA da página inteira é WhatsApp, aqui compatibilidade
+// vale mais que 30 KB.
+const {
+  titolo,
+  descrizione,
+  immagine = '/img/hero-v3.jpg',
+  noindex = false,
+} = Astro.props;
+
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const immagineAssoluta = new URL(immagine, Astro.site).href;
+
+// schema.org exigido pela Parte 5.5: Person + LocalBusiness,
+// área de atuação Catania.
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${Astro.site}#trajano`,
+      name: 'Trajano Ferrari',
+      jobTitle: 'Istruttore di danza fitness',
+      description:
+        'Creatore del metodo Cardio Dance Brasil. Tredici anni davanti a una sala.',
+      nationality: 'IT',
+      knowsLanguage: ['it', 'pt'],
+      telephone: TELEFONO,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: CITTA,
+        addressRegion: 'Sicilia',
+        addressCountry: 'IT',
+      },
+    },
+    {
+      '@type': 'LocalBusiness',
+      '@id': `${Astro.site}#attivita`,
+      name: 'Cardio Dance Brasil — Trajano Ferrari',
+      description: descrizione,
+      telephone: TELEFONO,
+      founder: { '@id': `${Astro.site}#trajano` },
+      areaServed: {
+        '@type': 'City',
+        name: CITTA,
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: CITTA,
+        addressRegion: 'Sicilia',
+        addressCountry: 'IT',
+      },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{titolo}</title>
+    <meta name="description" content={descrizione} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <link rel="canonical" href={url} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Trajano Ferrari" />
+    <meta property="og:title" content={titolo} />
+    <meta property="og:description" content={descrizione} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={immagineAssoluta} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#191517" />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

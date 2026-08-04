@@ -1,0 +1,102 @@
+---
+import { WHATSAPP } from '../lib/contatto';
+
+// Ordem aprovada na decisão 4: ordem de decisão, não de contrato.
+// A aula-teste grátis vem primeiro — é o item que fecha, porque
+// zera o risco. O título promete transparência ("quello che di
+// solito si scopre alla terza telefonata"); entregar o melhor item
+// primeiro cumpre a promessa.
+const voci = [
+  {
+    etichetta: 'Prova',
+    testo: 'Prima lezione dimostrativa gratuita, con i tuoi iscritti. Decidi dopo.',
+  },
+  {
+    etichetta: 'Tempi',
+    testo: 'Dalla prima chiamata alla prima lezione: due settimane. Se serve prima, si fa prima.',
+  },
+  {
+    etichetta: 'Disponibilità',
+    testo: 'Martedì e giovedì mattina. Tutte le sere dal lunedì al venerdì, dalle 18:00.',
+  },
+  {
+    etichetta: 'Inquadramento',
+    testo: 'Collaborazione sportiva regolare. Assicurazione professionale a mio carico. Cittadinanza italiana.',
+  },
+  {
+    etichetta: 'Formato',
+    testo: 'Lezione singola settimanale o ciclo continuativo. Anche evento singolo, open day o inaugurazione.',
+  },
+];
+---
+
+<section data-reveal class="sezione lavoriamo" aria-labelledby="lavoriamo-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="util">Come lavoriamo insieme</p>
+
+  <h2 id="lavoriamo-titolo" class="titolo">
+    Quello che di solito si scopre alla terza telefonata.
+  </h2>
+
+  <dl class="voci">
+    {
+      voci.map((v) => (
+        <div class="voce">
+          <dt class="voce__etichetta util">{v.etichetta}</dt>
+          <dd class="voce__testo">{v.testo}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <a class="cta" href={WHATSAPP} rel="noopener">Parliamone su WhatsApp</a>
+</section>
+
+<style>
+  .voci {
+    display: grid;
+    gap: var(--spazio-blocco);
+    margin-block: var(--spazio-blocco);
+  }
+
+  .voce {
+    padding-top: var(--spazio-riga);
+    border-top: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 16%, transparent);
+  }
+
+  .voce__etichetta {
+    color: var(--accento);
+    margin-bottom: 0.4rem;
+  }
+
+  .voce__testo {
+    margin: 0;
+    max-width: var(--misura);
+  }
+
+  /* A primeira voz é a que fecha negócio: ganha corpo maior. */
+  .voce:first-child .voce__testo {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-titolo);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+    max-width: 26ch;
+  }
+
+  @media (min-width: 56rem) {
+    .voci {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spazio-blocco) var(--spazio-sezione);
+      max-width: 68rem;
+    }
+    /* A prova atravessa as duas colunas: é a mais importante. */
+    .voce:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

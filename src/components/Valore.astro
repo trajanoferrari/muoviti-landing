@@ -1,0 +1,104 @@
+---
+import { WHATSAPP } from '../lib/contatto';
+
+// Ordem aprovada na decisão 3: a burocracia vem primeiro.
+// É a objeção real de quem contrata, e é surpresa positiva — o
+// diretor não espera ouvir isso de um professor de dança.
+//
+// Sem ícone, sem círculo, sem card, sem grade de três colunas.
+// É o padrão que o briefing proíbe na Parte 2.1 e é exatamente
+// aqui que a tentação aparece.
+const blocchi = [
+  {
+    titolo: 'Non ti do lavoro in più.',
+    testo:
+      'Certificazioni attive, assicurazione in regola, cittadinanza italiana, italiano fluente. Nessuna pratica da sistemare, nessun problema di comunicazione in sala. Si parte.',
+  },
+  {
+    titolo: 'Riempio la sala — e resta piena.',
+    testo:
+      'A luglio, alle nove del mattino, la media resta di 18 persone. Non è il picco di settembre: è il mese in cui tutti gli altri corsi si fermano. La costanza vale più del numero di un giorno buono.',
+  },
+  {
+    titolo: 'Le persone tornano.',
+    testo:
+      'Una lezione riuscita porta gente una volta. Un metodo costruito bene la riporta ogni settimana. Il Cardio Dance Brasil è progettato perché chi entra la prima volta sappia già seguire — e chi viene da un anno non si annoi.',
+  },
+];
+---
+
+<section data-reveal class="sezione valore" aria-labelledby="valore-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="util">Cosa porto nella tua sala</p>
+
+  <h2 id="valore-titolo" class="titolo">
+    Tre cose che un direttore tecnico vuole sapere prima di tutto.
+  </h2>
+
+  <ol class="valore__lista" role="list">
+    {
+      blocchi.map((b, i) => (
+        <li class="blocco">
+          <span class="blocco__numero" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div class="blocco__corpo">
+            <h3 class="blocco__titolo">{b.titolo}</h3>
+            <p>{b.testo}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <a class="cta" href={WHATSAPP} rel="noopener">Parliamone su WhatsApp</a>
+</section>
+
+<style>
+  .valore__lista {
+    display: grid;
+    gap: var(--spazio-blocco);
+    margin-bottom: var(--spazio-blocco);
+  }
+
+  .blocco {
+    display: grid;
+    gap: 0.4rem var(--spazio-riga);
+  }
+
+  .blocco__numero {
+    font-family: var(--font-util);
+    font-size: var(--passo-util);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accento);
+    padding-top: 0.35em;
+  }
+
+  .blocco__titolo {
+    font-size: clamp(1.3rem, 3vw, 1.75rem);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--spazio-riga);
+    max-width: 24ch;
+  }
+
+  /* Assimetria: no desktop o número vai para uma coluna estreita à
+     esquerda, mesma lógica do hero. */
+  @media (min-width: 56rem) {
+    .blocco {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: 0 var(--spazio-blocco);
+      /* A régua marca o bloco sem virar fio de jornal: é curta e
+         só na coluna do número. */
+      border-top: var(--tratto) solid
+        color-mix(in srgb, var(--testo) 20%, transparent);
+      padding-top: var(--spazio-riga);
+    }
+    .valore__lista {
+      gap: var(--spazio-sezione);
+      max-width: 62rem;
+    }
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+// Ordem invertida em relação ao briefing, conforme PLANO.md seção 3:
+// "não precisa decorar coreografia" é o que o diretor traduz na hora
+// em retenção de aluna. "É meu" é orgulho do professor.
+//
+// A primeira frase carrega as decisões 6 e 8: o método nasce em
+// Catania em 2024, com raiz brasileira, e o conflito entre "dodici
+// anni" e os "13 anni" dos números desaparece.
+const blocchi = [
+  {
+    titolo: 'Cosa cambia.',
+    testo:
+      'I ritmi sono brasiliani — samba, funk, axé, forró — ma la costruzione della lezione è pensata per chi non sa ballare. Nessuna coreografia da imparare a memoria. Si entra e si va, dal primo minuto.',
+  },
+  {
+    titolo: 'È un metodo mio.',
+    testo:
+      'Nato a Catania nel 2024, costruito su più di dieci anni di sala in Brasile.',
+  },
+  {
+    titolo: 'Perché funziona qui.',
+    testo:
+      'In Italia la danza fitness è dominata da format internazionali standardizzati. Io porto qualcosa che non si compra a licenza: una cultura di movimento che ho vissuto, non studiato.',
+  },
+];
+
+// Carrossel: 3 vídeos no desktop, 1 no celular com os outros dois
+// atrás do scroll. Ver PLANO.md, corte 3.
+// PENDENTE: por enquanto há dois MP4 no repositório. O terceiro
+// entra quando o Trajano indicar os reels.
+const video = [
+  { src: '/video/aula.mp4', poster: '/img/port-23.webp' },
+  { src: '/video/entrevista.mp4', poster: '/img/hero-v3.webp' },
+];
+---
+
+<section data-reveal class="sezione metodo" aria-labelledby="metodo-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="util">Cardio Dance Brasil</p>
+
+  <h2 id="metodo-titolo" class="titolo metodo__titolo">Non è Zumba.</h2>
+
+  <div class="metodo__colonne">
+    {
+      blocchi.map((b) => (
+        <div class="metodo__blocco">
+          <h3 class="metodo__sottotitolo">{b.titolo}</h3>
+          <p>{b.testo}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <ul class="carosello" role="list" tabindex="0" aria-label="Video del metodo">
+    {
+      video.map((v) => (
+        <li class="carosello__voce">
+          <video controls preload="none" poster={v.poster} playsinline>
+            <source src={v.src} type="video/mp4" />
+          </video>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .metodo__titolo {
+    /* O título faz o trabalho todo: o leitor italiano tem Zumba
+       como referência default, e negar posiciona em duas palavras. */
+    max-width: 12ch;
+  }
+
+  .metodo__colonne {
+    display: grid;
+    gap: var(--spazio-blocco);
+  }
+
+  .metodo__sottotitolo {
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Carrossel com scroll nativo. Sem biblioteca, sem JS. */
+  .carosello {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    gap: var(--spazio-riga);
+    margin-top: var(--spazio-blocco);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Sangra até a borda da tela, sem quebrar o padding da seção. */
+    margin-inline: calc(var(--margine) * -1);
+    padding-inline: var(--margine);
+    padding-bottom: var(--spazio-riga);
+    scrollbar-width: thin;
+  }
+
+  .carosello__voce {
+    scroll-snap-align: start;
+  }
+
+  .carosello video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    background: var(--basalto);
+    border-radius: var(--raggio);
+  }
+
+  @media (min-width: 56rem) {
+    .metodo__colonne {
+      /* Duas colunas, a da esquerda mais larga. Assimetria. */
+      grid-template-columns: 1.25fr 1fr;
+      gap: var(--spazio-blocco) var(--spazio-sezione);
+      max-width: 68rem;
+    }
+    .carosello {
+      grid-auto-columns: minmax(0, 22rem);
+      overflow-x: visible;
+      grid-auto-flow: row;
+      grid-template-columns: repeat(auto-fit, minmax(0, 22rem));
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+    .carosello video {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

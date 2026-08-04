@@ -1,0 +1,131 @@
+---
+// Seção 10 da home. A lista é buscada no NAVEGADOR, não no build: um
+// post novo tem que aparecer aqui sem rebuild (critério da fase 4).
+//
+// Regra do briefing: sem post, a seção não renderiza. Sem placeholder,
+// sem "em breve". Por isso a seção nasce com `hidden` e só é revelada
+// se o Supabase devolver pelo menos um post — se a lista vier vazia, ou
+// se a busca falhar, ela nunca aparece e o leitor não vê buraco.
+---
+
+<section class="sezione diario" aria-labelledby="diario-titolo" data-diario hidden>
+  <div class="diario__intestazione">
+    <div>
+      <div class="battuta" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <p class="util">Diario</p>
+      <h2 id="diario-titolo" class="sr-only">Diario</h2>
+    </div>
+    <a class="diario__tutti util" href="/diario">tutti i post →</a>
+  </div>
+
+  <ul class="diario__lista" role="list" data-lista></ul>
+</section>
+
+<style>
+  .diario__intestazione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spazio-riga);
+  }
+
+  .diario__tutti {
+    color: var(--accento);
+    text-transform: none;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+
+  .diario__lista {
+    display: grid;
+    gap: var(--spazio-blocco);
+    margin-top: var(--spazio-blocco);
+  }
+
+  .diario__lista :global(.posto a) {
+    display: grid;
+    gap: 0.4rem;
+    color: var(--testo);
+    text-decoration: none;
+  }
+
+  .diario__lista :global(.posto img) {
+    width: 100%;
+    border-radius: var(--raggio);
+    margin-bottom: 0.6rem;
+    object-fit: cover;
+  }
+
+  .diario__lista :global(.posto .data) {
+    color: var(--testo-secondario);
+  }
+
+  .diario__lista :global(.posto h3) {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-titolo);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height: 1.14;
+  }
+
+  .diario__lista :global(.posto a:hover h3) {
+    color: var(--accento);
+  }
+
+  .diario__lista :global(.posto p) {
+    color: var(--testo-secondario);
+    margin: 0;
+  }
+
+  @media (min-width: 56rem) {
+    .diario__lista {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--spazio-blocco);
+      max-width: 72rem;
+    }
+  }
+</style>
+
+<script>
+  import { ultimiPost, dataIt } from '../lib/diario';
+
+  const sezione = document.querySelector<HTMLElement>('[data-diario]');
+  const lista = document.querySelector<HTMLElement>('[data-lista]');
+
+  const testo = (s: string) => {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  };
+
+  if (sezione && lista) {
+    try {
+      const posts = await ultimiPost(3);
+      if (posts.length > 0) {
+        lista.innerHTML = posts
+          .map(
+            (p) => `
+          <li class="posto">
+            <a href="/diario/${encodeURIComponent(p.slug)}">
+              ${p.cover_url ? `<img src="${testo(p.cover_url)}" alt="" width="640" height="400" loading="lazy" decoding="async" />` : ''}
+              <span class="data util">${testo(dataIt(p.created_at))}</span>
+              <h3>${testo(p.titolo)}</h3>
+              ${p.sottotitolo ? `<p>${testo(p.sottotitolo)}</p>` : ''}
+            </a>
+          </li>`
+          )
+          .join('');
+        sezione.hidden = false;
+      }
+      // Lista vazia: a seção fica escondida. Nada de placeholder.
+    } catch (e) {
+      // Falha silenciosa DE PROPÓSITO: esta é a última seção da home, e
+      // um aviso de erro aqui atrapalharia a página inteira por causa de
+      // uma seção secundária. O erro fica no console.
+      console.error('[diario preview]', e);
+    }
+  }
+</script>

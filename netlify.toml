@@ -1,8 +1,43 @@
 [build]
-  publish = "."
-  command = ""
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Post individual do diário: /diario/il-mio-post serve a mesma página,
+# que lê o slug do caminho e busca no Supabase. Status 200, então a URL
+# não muda.
+#
+# Um post novo aparece SEM rebuild — que é o critério da fase 4. Se o
+# slug fosse resolvido em getStaticPaths, cada post exigiria build nova.
+#
+# Arquivo estático tem precedência sobre redirect no Netlify, então
+# /diario (a lista) continua servindo o próprio index.html.
+[[redirects]]
+  from = "/diario/*"
+  to = "/diario/post"
+  status = 200
+
+# Arquivos com hash no nome: cache longo.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Vídeos auto-hospedados: pesados e estáveis, vale o cache longo.
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

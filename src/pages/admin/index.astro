@@ -1,0 +1,548 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// ESCOPO FECHADO, conforme a Parte 5.4 do briefing.
+// Dentro: login, formulário, upload, lista com editar e excluir.
+// Fora: editor rico, preview, agendamento, categorias, tags,
+// comentários, múltiplos usuários. Se aparecer a tentação, não adicione.
+---
+
+<Base titolo="Admin — Diario" descrizione="Area riservata." noindex>
+  <main class="sezione admin">
+    <div class="battuta" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="util">Area riservata</p>
+    <h1 class="admin__titolo">Diario</h1>
+
+    <!-- ── LOGIN ── -->
+    <section data-login hidden aria-labelledby="login-titolo">
+      <h2 id="login-titolo" class="admin__sotto">Accedi</h2>
+      <form class="modulo" data-form-login>
+        <p class="campo">
+          <label class="util" for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="username" required />
+        </p>
+        <p class="campo">
+          <label class="util" for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+        </p>
+        <button class="cta" type="submit">Accedi</button>
+        <p class="esito esito--errore util" data-errore-login hidden role="alert"></p>
+      </form>
+    </section>
+
+    <!-- ── EDITOR ── -->
+    <section data-editor hidden>
+      <p class="admin__sessione util">
+        <span data-utente></span>
+        <button class="collegamento" type="button" data-esci>Esci</button>
+      </p>
+
+      <h2 class="admin__sotto" data-modo>Nuovo post</h2>
+
+      <form class="modulo" data-form-post>
+        <input type="hidden" name="id" data-id />
+
+        <p class="campo">
+          <label class="util" for="titolo">Titolo</label>
+          <input id="titolo" name="titolo" type="text" required />
+          <span class="aiuto util" data-slug></span>
+        </p>
+
+        <p class="campo">
+          <label class="util" for="sottotitolo">Sottotitolo</label>
+          <input id="sottotitolo" name="sottotitolo" type="text" />
+        </p>
+
+        <p class="campo">
+          <label class="util" for="testo">Testo</label>
+          <textarea id="testo" name="testo" rows="14" required></textarea>
+          <span class="aiuto util">
+            Markdown semplice: **grassetto**, *corsivo*, ## titolo,
+            - elenco, &gt; citazione, [link](https://…)
+          </span>
+        </p>
+
+        <p class="campo">
+          <label class="util" for="cover">Copertina</label>
+          <input id="cover" name="cover" type="file" accept="image/*" />
+          <span class="aiuto util" data-cover-attuale hidden></span>
+        </p>
+
+        <p class="campo">
+          <label class="util" for="extra">Foto extra (facoltative)</label>
+          <input id="extra" name="extra" type="file" accept="image/*" multiple />
+          <span class="aiuto util" data-extra-attuali hidden></span>
+        </p>
+
+        <p class="campo campo--riga">
+          <input id="pubblicato" name="pubblicato" type="checkbox" />
+          <label class="util" for="pubblicato">Pubblicato</label>
+        </p>
+
+        <div class="azioni">
+          <button class="cta" type="submit" data-salva>Salva</button>
+          <button class="collegamento" type="button" data-annulla hidden>
+            Annulla modifica
+          </button>
+        </div>
+
+        <p class="esito util" data-esito hidden role="status"></p>
+      </form>
+
+      <h2 class="admin__sotto">Post</h2>
+      <p class="util" data-stato-lista>Carico…</p>
+      <ul class="lista" role="list" data-lista hidden></ul>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .admin {
+    max-width: 46rem;
+  }
+
+  .admin__titolo {
+    font-size: var(--passo-l);
+    font-stretch: var(--largura-display);
+    margin-block: var(--spazio-riga) var(--spazio-blocco);
+  }
+
+  .admin__sotto {
+    font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+    margin-block: var(--spazio-sezione) var(--spazio-blocco);
+  }
+
+  .admin__sessione {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spazio-riga);
+    align-items: baseline;
+    color: var(--testo-secondario);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .modulo {
+    display: grid;
+    gap: var(--spazio-riga);
+  }
+
+  .campo {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .campo--riga {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .campo--riga input {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: var(--sanguigna);
+  }
+
+  .campo input[type='text'],
+  .campo input[type='email'],
+  .campo input[type='password'],
+  .campo textarea {
+    background: transparent;
+    color: var(--testo);
+    border: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 38%, transparent);
+    border-radius: var(--raggio);
+    padding: 0.8rem 0.9rem;
+    min-height: 48px;
+    font-family: var(--font-corpo);
+    font-size: var(--passo-base);
+    width: 100%;
+  }
+
+  .campo textarea {
+    font-family: var(--font-util);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    resize: vertical;
+  }
+
+  .campo input[type='file'] {
+    font-family: var(--font-util);
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+  }
+
+  .aiuto {
+    color: var(--testo-secondario);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  .azioni {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spazio-riga);
+    margin-top: var(--spazio-riga);
+  }
+
+  .collegamento {
+    background: none;
+    border: 0;
+    padding: 0.5rem 0;
+    color: var(--accento);
+    font-family: var(--font-util);
+    font-size: var(--passo-util);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    min-height: 44px;
+  }
+
+  .esito {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  .esito--ok {
+    color: var(--ionio);
+  }
+
+  .esito--errore {
+    color: var(--sanguigna);
+  }
+
+  .lista {
+    display: grid;
+    gap: var(--spazio-riga);
+    margin-top: var(--spazio-riga);
+  }
+
+  .lista :global(li) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem var(--spazio-riga);
+    padding-top: var(--spazio-riga);
+    border-top: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 16%, transparent);
+  }
+
+  .lista :global(.info) {
+    flex: 1 1 14rem;
+  }
+
+  .lista :global(.titolo-post) {
+    font-weight: 600;
+  }
+
+  .lista :global(.meta) {
+    display: block;
+    font-family: var(--font-util);
+    font-size: var(--passo-util);
+    color: var(--testo-secondario);
+    margin-top: 0.2rem;
+  }
+
+  .lista :global(.bozza) {
+    color: var(--sanguigna);
+  }
+</style>
+
+<script>
+  import { supabase, slugify, BUCKET, type Post } from '../../lib/supabase';
+
+  const q = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
+
+  const secLogin = q('[data-login]');
+  const secEditor = q('[data-editor]');
+  const formLogin = q<HTMLFormElement>('[data-form-login]');
+  const formPost = q<HTMLFormElement>('[data-form-post]');
+  const erroreLogin = q('[data-errore-login]');
+  const esito = q('[data-esito]');
+  const lista = q('[data-lista]');
+  const statoLista = q('[data-stato-lista]');
+  const campoId = q<HTMLInputElement>('[data-id]');
+  const modo = q('[data-modo]');
+  const btnAnnulla = q<HTMLButtonElement>('[data-annulla]');
+  const btnSalva = q<HTMLButtonElement>('[data-salva]');
+  const spanSlug = q('[data-slug]');
+  const coverAttuale = q('[data-cover-attuale]');
+  const extraAttuali = q('[data-extra-attuali]');
+
+  let inModifica: Post | null = null;
+
+  const testo = (s: string) => {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  };
+
+  function mostra(el: HTMLElement, messaggio: string, ok: boolean) {
+    el.textContent = messaggio;
+    el.classList.toggle('esito--ok', ok);
+    el.classList.toggle('esito--errore', !ok);
+    el.hidden = false;
+  }
+
+  // ── SESSÃO ────────────────────────────────────────────────────
+  async function aggiornaSessione() {
+    const { data } = await supabase.auth.getSession();
+    const dentro = !!data.session;
+    secLogin.hidden = dentro;
+    secEditor.hidden = !dentro;
+    if (dentro) {
+      q('[data-utente]').textContent = data.session!.user.email ?? '';
+      await caricaLista();
+    }
+  }
+
+  formLogin.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    erroreLogin.hidden = true;
+    const f = new FormData(formLogin);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: String(f.get('email')),
+      password: String(f.get('password')),
+    });
+    if (error) {
+      // Diz o que falhou. Não "errore generico".
+      mostra(
+        erroreLogin,
+        error.message.includes('Invalid login')
+          ? 'Email o password non corretti.'
+          : `Accesso non riuscito: ${error.message}`,
+        false
+      );
+      return;
+    }
+    formLogin.reset();
+    await aggiornaSessione();
+  });
+
+  q('[data-esci]').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  });
+
+  // ── SLUG ──────────────────────────────────────────────────────
+  const campoTitolo = q<HTMLInputElement>('#titolo');
+  campoTitolo.addEventListener('input', () => {
+    // Na edição o slug NÃO muda: alterá-lo quebraria o link de um post
+    // já publicado e compartilhado.
+    if (inModifica) {
+      spanSlug.textContent = `/diario/${inModifica.slug} · non cambia`;
+      return;
+    }
+    const s = slugify(campoTitolo.value);
+    spanSlug.textContent = s ? `/diario/${s}` : '';
+  });
+
+  /** Garante unicidade: la-mia-lezione, la-mia-lezione-2, … */
+  async function slugLibero(base: string): Promise<string> {
+    let tentativo = base || 'post';
+    for (let n = 2; n < 60; n++) {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('id')
+        .eq('slug', tentativo)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) return tentativo;
+      tentativo = `${base}-${n}`;
+    }
+    return `${base}-${Date.now()}`;
+  }
+
+  // ── UPLOAD ────────────────────────────────────────────────────
+  async function carica(file: File, slug: string): Promise<string> {
+    const est = (file.name.split('.').pop() || 'jpg').toLowerCase();
+    const nome = `${slug}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${est}`;
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(nome, file, { cacheControl: '31536000', upsert: false });
+    if (error) throw new Error(`Upload di "${file.name}" non riuscito: ${error.message}`);
+    return supabase.storage.from(BUCKET).getPublicUrl(nome).data.publicUrl;
+  }
+
+  // ── SALVAR ────────────────────────────────────────────────────
+  formPost.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    esito.hidden = true;
+    btnSalva.disabled = true;
+    btnSalva.textContent = 'Salvo…';
+
+    try {
+      const f = new FormData(formPost);
+      const titolo = String(f.get('titolo')).trim();
+      const slug = inModifica ? inModifica.slug : await slugLibero(slugify(titolo));
+
+      const fileCover = f.get('cover') as File | null;
+      const fileExtra = formPost.querySelector<HTMLInputElement>('#extra')!.files;
+
+      let cover_url = inModifica?.cover_url ?? null;
+      if (fileCover && fileCover.size > 0) cover_url = await carica(fileCover, slug);
+
+      let foto_extra = inModifica?.foto_extra ?? [];
+      if (fileExtra && fileExtra.length > 0) {
+        const nuove: string[] = [];
+        for (const file of Array.from(fileExtra)) nuove.push(await carica(file, slug));
+        foto_extra = [...foto_extra, ...nuove];
+      }
+
+      const riga = {
+        slug,
+        titolo,
+        sottotitolo: String(f.get('sottotitolo') || '').trim() || null,
+        testo: String(f.get('testo')),
+        cover_url,
+        foto_extra,
+        pubblicato: f.get('pubblicato') === 'on',
+      };
+
+      const { error } = inModifica
+        ? await supabase.from('posts').update(riga).eq('id', inModifica.id)
+        : await supabase.from('posts').insert(riga);
+      if (error) throw error;
+
+      const era = !!inModifica;
+      reimposta();
+      await caricaLista();
+      mostra(
+        esito,
+        era
+          ? 'Modifiche salvate.'
+          : riga.pubblicato
+            ? `Pubblicato. È già online su /diario/${slug}`
+            : 'Salvato come bozza. Non è visibile online.',
+        true
+      );
+    } catch (e: any) {
+      mostra(esito, e?.message ?? 'Salvataggio non riuscito.', false);
+      console.error('[admin]', e);
+    } finally {
+      btnSalva.disabled = false;
+      btnSalva.textContent = 'Salva';
+    }
+  });
+
+  function reimposta() {
+    inModifica = null;
+    formPost.reset();
+    campoId.value = '';
+    modo.textContent = 'Nuovo post';
+    btnAnnulla.hidden = true;
+    spanSlug.textContent = '';
+    coverAttuale.hidden = true;
+    extraAttuali.hidden = true;
+  }
+
+  btnAnnulla.addEventListener('click', () => {
+    reimposta();
+    esito.hidden = true;
+  });
+
+  // ── LISTA ─────────────────────────────────────────────────────
+  async function caricaLista() {
+    try {
+      // Autenticado vê tudo, inclusive rascunho.
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+
+      const posts = (data ?? []) as Post[];
+      if (posts.length === 0) {
+        statoLista.textContent = 'Ancora nessun post.';
+        lista.hidden = true;
+        return;
+      }
+
+      lista.innerHTML = posts
+        .map(
+          (p) => `
+        <li>
+          <span class="info">
+            <span class="titolo-post">${testo(p.titolo)}</span>
+            <span class="meta">
+              /diario/${testo(p.slug)} ·
+              ${new Date(p.created_at).toLocaleDateString('it-IT')} ·
+              ${p.pubblicato ? 'pubblicato' : '<span class="bozza">bozza</span>'}
+            </span>
+          </span>
+          <button class="collegamento" type="button" data-modifica="${p.id}">Modifica</button>
+          <button class="collegamento" type="button" data-elimina="${p.id}">Elimina</button>
+        </li>`
+        )
+        .join('');
+      lista.hidden = false;
+      statoLista.hidden = true;
+
+      lista.querySelectorAll<HTMLButtonElement>('[data-modifica]').forEach((b) =>
+        b.addEventListener('click', () => {
+          const p = posts.find((x) => x.id === b.dataset.modifica)!;
+          apriModifica(p);
+        })
+      );
+      lista.querySelectorAll<HTMLButtonElement>('[data-elimina]').forEach((b) =>
+        b.addEventListener('click', () => elimina(posts.find((x) => x.id === b.dataset.elimina)!))
+      );
+    } catch (e: any) {
+      statoLista.hidden = false;
+      statoLista.textContent = `Non riesco a caricare i post: ${e?.message ?? e}`;
+      console.error('[admin]', e);
+    }
+  }
+
+  function apriModifica(p: Post) {
+    inModifica = p;
+    campoId.value = p.id;
+    campoTitolo.value = p.titolo;
+    q<HTMLInputElement>('#sottotitolo').value = p.sottotitolo ?? '';
+    q<HTMLTextAreaElement>('#testo').value = p.testo;
+    q<HTMLInputElement>('#pubblicato').checked = p.pubblicato;
+    modo.textContent = `Modifica: ${p.titolo}`;
+    btnAnnulla.hidden = false;
+    spanSlug.textContent = `/diario/${p.slug} · non cambia`;
+
+    if (p.cover_url) {
+      coverAttuale.textContent = 'C’è già una copertina. Carica un file solo per sostituirla.';
+      coverAttuale.hidden = false;
+    }
+    if (p.foto_extra?.length) {
+      extraAttuali.textContent = `${p.foto_extra.length} foto già caricate. I nuovi file si aggiungono.`;
+      extraAttuali.hidden = false;
+    }
+    esito.hidden = true;
+    formPost.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function elimina(p: Post) {
+    if (!confirm(`Eliminare "${p.titolo}"? Non si può annullare.`)) return;
+    const { error } = await supabase.from('posts').delete().eq('id', p.id);
+    if (error) {
+      mostra(esito, `Eliminazione non riuscita: ${error.message}`, false);
+      return;
+    }
+    if (inModifica?.id === p.id) reimposta();
+    await caricaLista();
+    mostra(esito, 'Post eliminato.', true);
+  }
+
+  secLogin.hidden = false;
+  await aggiornaSessione();
+</script>

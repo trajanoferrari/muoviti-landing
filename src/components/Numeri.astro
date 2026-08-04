@@ -1,0 +1,110 @@
+---
+// Ordem aprovada na decisão 2: do que decide para o que decora.
+// O 18 vem primeiro porque é o único número que um diretor técnico
+// não consegue explicar de outra forma.
+//
+// O valor final está no HTML como texto. O contador da Fase 3 só
+// substitui o conteúdo — se o JS falhar, ou se o leitor pedir
+// menos movimento, o número já está certo na tela.
+const numeri = [
+  { valore: 18, suffisso: '', etichetta: 'persone di media a lezione, a luglio' },
+  { valore: 3, suffisso: '', etichetta: 'mattine a settimana, tutto l’anno' },
+  { valore: 13, suffisso: '', etichetta: 'anni davanti a una sala' },
+  { valore: 500, suffisso: '+', etichetta: 'istruttori formati' },
+];
+---
+
+<section data-reveal class="sezione numeri su-basalto" aria-labelledby="numeri-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <h2 id="numeri-titolo" class="sr-only">I numeri</h2>
+
+  <ul class="numeri__lista" role="list">
+    {
+      numeri.map((n, i) => (
+        <li class="numero">
+          <span class="numero__valore" data-numero={n.valore} data-indice={i}>
+            {n.valore}<span class="numero__suffisso">{n.suffisso}</span>
+          </span>
+          <span class="numero__etichetta">{n.etichetta}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="numeri__legenda">
+    Le nove del mattino, in piena estate, sono l’ora in cui le sale si
+    svuotano. La mia no.
+  </p>
+</section>
+
+<style>
+  .numeri__lista {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spazio-blocco) var(--spazio-riga);
+    margin-block: var(--spazio-blocco);
+  }
+
+  .numero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .numero__valore {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-display);
+    font-weight: 800;
+    font-size: var(--passo-xl);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--accento);
+    /* Largura fixa por dígito: durante a contagem da Fase 3 o
+       número não treme. */
+    font-variant-numeric: tabular-nums;
+  }
+
+  .numero__suffisso {
+    /* Prefixos e sufixos entram por opacidade ao fim da contagem
+       (spec 3.1), então a Fase 3 anima só isto. */
+    font-size: 0.5em;
+    vertical-align: super;
+    letter-spacing: 0;
+  }
+
+  .numero__etichetta {
+    font-family: var(--font-util);
+    font-size: var(--passo-util);
+    line-height: 1.45;
+    letter-spacing: 0.04em;
+    color: var(--testo);
+    margin-top: 0.7rem;
+    max-width: 20ch;
+  }
+
+  /* Legenda em contraste cheio, corpo menor. Escurecer texto
+     sobre fundo escuro custa legibilidade sem devolver nada. */
+  /* Sem font-style: italic. A Literata carregada aqui é só normal, e
+     o navegador inclinaria a serifada artificialmente — fica ruim.
+     Carregar o itálico de verdade custaria ~50 KB por uma legenda.
+     A legenda já se distingue pela régua, pelo corpo e por ser a
+     única serifada sobre basalto. */
+  .numeri__legenda {
+    font-size: var(--passo-lead);
+    line-height: 1.45;
+    max-width: 34ch;
+    border-top: var(--tratto) solid color-mix(in srgb, var(--testo) 28%, transparent);
+    padding-top: var(--spazio-riga);
+  }
+
+  @media (min-width: 56rem) {
+    .numeri__lista {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spazio-blocco);
+    }
+    .numeri__legenda {
+      max-width: 46ch;
+    }
+  }
+</style>

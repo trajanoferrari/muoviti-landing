@@ -1,0 +1,172 @@
+---
+import { WHATSAPP } from '../lib/contatto';
+
+// Quatro campos, nenhum a mais. `Palestra` é o campo que qualifica.
+// Não pedimos e-mail: quem preenche aqui quer ser ligado, não escrito.
+//
+// O formulário posta no Netlify Forms e funciona SEM JavaScript.
+// Os estados inline de sucesso e erro que o briefing especifica
+// ficam para a Fase 3, com um fetch pequeno — a marcação e o estilo
+// deles já estão prontos abaixo.
+const campi = [
+  { nome: 'nome', etichetta: 'Nome', tipo: 'text', autocomplete: 'name' },
+  { nome: 'palestra', etichetta: 'Palestra', tipo: 'text', autocomplete: 'organization' },
+  { nome: 'telefono', etichetta: 'Telefono', tipo: 'tel', autocomplete: 'tel' },
+] as const;
+---
+
+<section data-reveal class="sezione contatto su-basalto" id="contatto" aria-labelledby="contatto-titolo">
+  <div class="contatto__griglia">
+    <div>
+      <div class="battuta" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <p class="util">Contatto</p>
+
+      <h2 id="contatto-titolo" class="titolo contatto__titolo">
+        Se hai una sala vuota la mattina, parliamone.
+      </h2>
+
+      <a class="cta" href={WHATSAPP} rel="noopener">Scrivimi su WhatsApp</a>
+
+      <p class="contatto__alternativa">
+        Oppure lascia due righe qui sotto e ti richiamo io.
+      </p>
+    </div>
+
+    <form
+      class="modulo"
+      name="contatto"
+      method="POST"
+      data-netlify="true"
+      action="/grazie"
+    >
+      <!-- Netlify Forms: campo anti-spam nativo, invisível ao leitor. -->
+      <p hidden>
+        <label>Non compilare <input name="bot-field" /></label>
+      </p>
+
+      {
+        campi.map((c) => (
+          <p class="campo">
+            <label class="campo__etichetta util" for={c.nome}>
+              {c.etichetta}
+            </label>
+            <input
+              class="campo__input"
+              id={c.nome}
+              name={c.nome}
+              type={c.tipo}
+              autocomplete={c.autocomplete}
+              required
+            />
+          </p>
+        ))
+      }
+
+      <p class="campo">
+        <label class="campo__etichetta util" for="messaggio">Messaggio</label>
+        <textarea class="campo__input" id="messaggio" name="messaggio" rows="4"
+        ></textarea>
+      </p>
+
+      <button class="cta" type="submit">Invia</button>
+
+      <!-- Estados prontos para a Fase 3. Escondidos por atributo, não
+           por CSS, para não aparecerem a leitor de tela antes da hora. -->
+      <p class="esito esito--ok" hidden role="status">
+        Ricevuto. Ti richiamo entro 24 ore.
+      </p>
+      <p class="esito esito--errore" hidden role="alert"></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contatto__griglia {
+    display: grid;
+    gap: var(--spazio-sezione);
+  }
+
+  .contatto__titolo {
+    max-width: 20ch;
+  }
+
+  .contatto__alternativa {
+    margin-top: var(--spazio-blocco);
+    color: var(--testo);
+    max-width: 32ch;
+  }
+
+  .modulo {
+    display: grid;
+    gap: var(--spazio-riga);
+    max-width: 30rem;
+  }
+
+  .campo {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  /* Rótulo sempre visível. Nunca placeholder como rótulo: ele
+     desaparece na hora em que a pessoa mais precisa dele. */
+  .campo__etichetta {
+    color: var(--testo);
+    letter-spacing: 0.1em;
+  }
+
+  .campo__input {
+    background: transparent;
+    color: var(--testo);
+    border: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 38%, transparent);
+    border-radius: var(--raggio);
+    padding: 0.85rem 0.9rem;
+    min-height: 48px;
+    font-family: var(--font-corpo);
+    font-size: var(--passo-base);
+    width: 100%;
+  }
+
+  .campo__input:focus-visible {
+    border-color: var(--accento);
+    outline: var(--tratto) solid var(--accento);
+    outline-offset: 1px;
+  }
+
+  textarea.campo__input {
+    resize: vertical;
+    min-height: 7rem;
+  }
+
+  .modulo .cta {
+    justify-self: start;
+    margin-top: var(--spazio-riga);
+    border: 0;
+  }
+
+  .esito {
+    font-family: var(--font-util);
+    font-size: var(--passo-util);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+
+  .esito--ok {
+    color: var(--accento);
+  }
+
+  .esito--errore {
+    color: var(--sanguigna-viva);
+  }
+
+  @media (min-width: 56rem) {
+    .contatto__griglia {
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--spazio-sezione);
+      align-items: start;
+    }
+  }
+</style>

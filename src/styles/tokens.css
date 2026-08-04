@@ -1,0 +1,88 @@
+/* ─────────────────────────────────────────────────────────────
+   tokens.css — única fonte de cor e tipografia.
+   Nenhum hex solto em outro lugar do CSS: tudo deriva daqui.
+   Justificativa de cada valor em PLANO.md, Fase 2, seções B a E.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── COR ────────────────────────────────────────────────────
+     Catania foi reconstruída em basalto do Etna, contornado de
+     pedra calcária clara. A laranja sanguínea é o produto da
+     região: vermelha por dentro, laranja por fora — calor
+     brasileiro dentro de forma siciliana.
+     Contrastes conferidos: todos os pares em uso passam AA.   */
+
+  --basalto: #191517; /* lava do Etna. preto quente, nunca #000 */
+  --calce: #e4e3de; /* cal e calcária. cinza-pedra, não creme */
+  --cenere: #5c564f; /* cinza vulcânica. texto secundário       */
+  --sanguigna: #b02a15; /* a polpa. acento sobre claro            */
+  --sanguigna-viva: #f2603f; /* a casca. acento sobre escuro    */
+  --ionio: #17565f; /* mar Jônio. rótulos e detalhes frios      */
+
+  /* Papéis de superfície. Os componentes usam estes, não os
+     nomes de cor — assim inverter uma seção é trocar 2 linhas. */
+  --sfondo: var(--calce);
+  --testo: var(--basalto);
+  --testo-secondario: var(--cenere);
+  --accento: var(--sanguigna);
+
+  /* ── TIPOGRAFIA ─────────────────────────────────────────────
+     Display com peso e largura extremos, como cartaz de baile.
+     Corpo serifado, desenhado para tela. Mono para números.    */
+
+  --font-display: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-corpo: 'Literata Variable', ui-serif, Georgia, serif;
+  --font-util: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Largura do display. O eixo vai de 62% a 125%:
+     usamos só a metade larga, e o corpo nunca é esticado.      */
+  --largura-display: 118%; /* hero e números: empurra a borda   */
+  --largura-titolo: 105%; /* títulos de seção: largo, contido   */
+
+  /* ── ESCALA ─────────────────────────────────────────────────
+     Seis passos, com vão real. Entre corpo e título de seção há
+     um salto de ~3×, e nenhum passo intermediário para
+     amortecer: o vão é o efeito.                               */
+
+  /* Números: curtos, podem ser enormes. */
+  --passo-xl: clamp(3rem, 12vw, 8rem);
+  /* Título do hero: precisa caber com kicker, sub e CTA numa tela de
+     900px. A 8rem o CTA caía abaixo da dobra no desktop — e o CTA do
+     hero existe justamente para quem já decidiu. */
+  --passo-hero: clamp(2.6rem, 6.4vw, 4.5rem);
+  --passo-l: clamp(2rem, 6vw, 3.75rem);
+  --passo-m: clamp(1.75rem, 5.5vw, 3rem);
+  --passo-lead: clamp(1.1875rem, 2.2vw, 1.5rem);
+  --passo-base: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  --passo-util: 0.78rem;
+
+  /* ── RITMO VERTICAL E MEDIDA ────────────────────────────────── */
+
+  --spazio-sezione: clamp(4rem, 10vw, 8rem);
+  --spazio-blocco: clamp(1.75rem, 4vw, 3rem);
+  --spazio-riga: clamp(0.75rem, 1.5vw, 1.125rem);
+
+  /* Margem lateral. Cresce no desktop mas nunca centraliza o
+     conteúdo num bloco estreito no meio da tela.               */
+  --margine: clamp(1.25rem, 5vw, 5.5rem);
+
+  /* Medida de leitura. Acima de ~65 caracteres o olho perde a
+     linha ao voltar. Abaixo de 45 o texto fica picado.          */
+  --misura: 62ch;
+  --misura-stretta: 46ch;
+
+  /* ── TRAÇOS ─────────────────────────────────────────────────── */
+
+  --raggio: 2px; /* quase nada. o briefing proíbe raio zero (jornal),
+                    mas card arredondado não é a linguagem daqui  */
+  --tratto: 1.5px; /* espessura da battuta e das réguas           */
+}
+
+/* Seções invertidas: hero, números e interstícios.
+   Trocar os papéis, não as cores, em um lugar só. */
+.su-basalto {
+  --sfondo: var(--basalto);
+  --testo: var(--calce);
+  --testo-secondario: var(--calce);
+  --accento: var(--sanguigna-viva);
+}
