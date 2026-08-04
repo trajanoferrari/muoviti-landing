@@ -3,10 +3,20 @@ import { createClient } from '@supabase/supabase-js';
 const url = import.meta.env.PUBLIC_SUPABASE_URL;
 const anonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
-if (!url || !anonKey) {
-  throw new Error(
-    'Faltam PUBLIC_SUPABASE_URL ou PUBLIC_SUPABASE_ANON_KEY. ' +
-      'Copie .env.example para .env (e configure as duas no Netlify).'
+/**
+ * Não lança na carga do módulo, de propósito.
+ *
+ * Antes lançava. O problema: o bundler junta os scripts da página num
+ * chunk só, então um erro aqui derrubaria também o contador dos números
+ * e os reveals — animação da home morrendo por causa de uma variável de
+ * ambiente do diário. Agora só o diário falha, e avisa no console.
+ */
+export const configurato = Boolean(url && anonKey);
+
+if (!configurato && typeof console !== 'undefined') {
+  console.error(
+    '[supabase] Faltam PUBLIC_SUPABASE_URL ou PUBLIC_SUPABASE_ANON_KEY. ' +
+      'O diário não vai carregar. Configure as duas no Netlify.'
   );
 }
 
@@ -25,7 +35,7 @@ export type Post = {
   created_at: string;
 };
 
-export const supabase = createClient(url, anonKey);
+export const supabase = createClient(url ?? '', anonKey ?? '');
 
 /** Nome do bucket do Storage para as imagens do diário. */
 export const BUCKET = 'blog';

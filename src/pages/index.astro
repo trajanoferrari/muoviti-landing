@@ -71,3 +71,15 @@ import WhatsAppFisso from '../components/WhatsAppFisso.astro';
 
   <WhatsAppFisso />
 </Base>
+
+<script>
+  // FASE 3. Três coisas, nada além: contador, reveals de seção e o
+  // botão fixo. Sem parallax, sem cursor custom, sem scroll hijacking.
+  // Zero biblioteca de animação: IntersectionObserver + CSS + rAF.
+  import { avviaContatore } from '../lib/countUp';
+  import { avviaReveal, avviaBottoneFisso } from '../lib/reveal';
+
+  avviaReveal();
+  avviaContatore();
+  avviaBottoneFisso();
+</script>
