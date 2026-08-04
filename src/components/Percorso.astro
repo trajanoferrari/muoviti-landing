@@ -1,0 +1,209 @@
+---
+// Nota de conteúdo do briefing, respeitada: as formações aparecem
+// como credencial própria. Nenhuma menção a cargo, vínculo
+// institucional ou empresa empregadora. Não é um currículo.
+//
+// A credencial Libertas/CONI vem primeiro: é a única que um diretor
+// técnico italiano reconhece na hora.
+const formazioni = [
+  'Insegnante Tecnico di 3° Livello — Albo Nazionale Tecnici Libertas (riconosciuto CONI)',
+  'Cross Cardio L3',
+  'Cross Cardio Mobility',
+  'Cross Cardio SGT',
+  'Outdoor Coach',
+  'Zumba Basic 1',
+  'Assicurazione professionale attiva',
+];
+
+// Decisão 8: nasce em Catania, em 2024. "adattato al pubblico
+// italiano" ficou redundante — se nasceu em Catania, já nasceu para
+// o público italiano.
+const percorso = [
+  { anno: '2013', testo: 'Inizio come istruttore di danza fitness, Brasile' },
+  { anno: '2015–2022', testo: 'Fondatore e direttore di Urban Mix. +500 istruttori formati' },
+  { anno: '2022', testo: 'Trasferimento in Italia' },
+  { anno: '2024', testo: 'Nascita del Cardio Dance Brasil, a Catania' },
+  { anno: 'Oggi', testo: 'Catania, tre mattine a settimana' },
+];
+---
+
+<section class="sezione percorso" aria-labelledby="percorso-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="util">Percorso e formazioni</p>
+  <h2 id="percorso-titolo" class="sr-only">Percorso e formazioni</h2>
+
+  <div class="percorso__griglia">
+    <div class="percorso__formazioni">
+      <h3 class="percorso__sottotitolo">Formazioni</h3>
+      <ul class="formazioni" role="list">
+        {formazioni.map((f) => <li>{f}</li>)}
+      </ul>
+      <!-- Decisão 5: assumir, não esconder. Conhecer o padrão e ter
+           escolhido outro caminho é mais forte que nunca ter visto. -->
+      <p class="percorso__nota util">
+        Zumba Basic 1 è in questa lista perché conosco il format.<br />
+        Ho scelto un’altra strada.
+      </p>
+
+      <figure class="percorso__foto">
+        <img
+          src="/img/port-5.webp"
+          width="960"
+          height="720"
+          alt="Formazione di istruttori in Brasile."
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+
+    <!-- Corte 2 do celular: a linha do tempo repete em lista o que
+         CHI SONO já contou em prosa, na tela anterior. Fica atrás de
+         um <details>, que é nativo e não precisa de JS. -->
+    <details class="percorso__storia">
+      <summary class="percorso__sottotitolo">
+        <span>Percorso</span>
+        <span class="percorso__apri util">il percorso completo</span>
+      </summary>
+      <ol class="tappe" role="list">
+        {
+          percorso.map((t) => (
+            <li class="tappa">
+              <span class="tappa__anno util">{t.anno}</span>
+              <span class="tappa__testo">{t.testo}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </details>
+  </div>
+</section>
+
+<style>
+  .percorso__griglia {
+    display: grid;
+    gap: var(--spazio-sezione);
+    margin-top: var(--spazio-riga);
+  }
+
+  .percorso__sottotitolo {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-titolo);
+    font-weight: 800;
+    font-size: clamp(1.3rem, 3vw, 1.75rem);
+    margin-bottom: var(--spazio-riga);
+  }
+
+  /* Sem tabela, sem borda de caixa. Só uma régua curta por item. */
+  .formazioni {
+    display: grid;
+    gap: 0.85rem;
+    max-width: var(--misura);
+  }
+
+  .formazioni li {
+    padding-top: 0.85rem;
+    border-top: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 16%, transparent);
+  }
+
+  .formazioni li:first-child {
+    font-weight: 600;
+  }
+
+  .percorso__nota {
+    margin-top: var(--spazio-blocco);
+    color: var(--testo-secondario);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  .percorso__foto {
+    margin-top: var(--spazio-blocco);
+  }
+
+  .percorso__foto img {
+    width: 100%;
+    border-radius: var(--raggio);
+    /* Preto e branco, como pede o briefing. */
+    filter: grayscale(1) contrast(1.08);
+  }
+
+  /* ── linha do tempo ── */
+  .percorso__storia summary {
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .percorso__apri {
+    color: var(--accento);
+    text-transform: none;
+    letter-spacing: 0.06em;
+  }
+
+  .percorso__storia[open] .percorso__apri {
+    display: none;
+  }
+
+  .tappe {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: var(--spazio-blocco);
+  }
+
+  .tappa {
+    display: grid;
+    gap: 0.15rem;
+    padding-top: 0.85rem;
+    border-top: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 16%, transparent);
+  }
+
+  .tappa__anno {
+    color: var(--accento);
+  }
+
+  @media (min-width: 56rem) {
+    .percorso__griglia {
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--spazio-sezione);
+    }
+    /* No desktop a linha do tempo está sempre aberta: há espaço,
+       e o <details> vira só um agrupamento semântico. */
+    .percorso__storia {
+      /* Chrome/Safari respeitam isto; onde não respeitarem, o
+         atributo open do markup não existe e o usuário abre com um
+         clique. Não é perda de informação. */
+      display: block;
+    }
+    .percorso__apri {
+      display: none;
+    }
+    .tappa {
+      grid-template-columns: 7rem minmax(0, 1fr);
+      gap: 0 var(--spazio-riga);
+      align-items: baseline;
+    }
+  }
+</style>
+
+<script>
+  // Único JS desta fase, e não é animação: no desktop a linha do
+  // tempo abre por padrão, porque ali há espaço e ela não custa
+  // rolagem. No celular fica fechada, que é o corte 2 do PLANO.md.
+  // Sem isto, o atributo `open` teria que estar no HTML e o celular
+  // herdaria a versão longa.
+  const storia = document.querySelector<HTMLDetailsElement>('.percorso__storia');
+  const largo = window.matchMedia('(min-width: 56rem)');
+  const sincronizza = () => {
+    if (storia) storia.open = largo.matches;
+  };
+  sincronizza();
+  largo.addEventListener('change', sincronizza);
+</script>

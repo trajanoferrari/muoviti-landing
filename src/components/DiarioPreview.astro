@@ -1,0 +1,132 @@
+---
+import type { Post } from '../lib/supabase';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+
+// Regra do briefing: sem post, a seção não renderiza. Sem
+// placeholder, sem "em breve". A Fase 4 liga isto ao Supabase; aqui
+// a lista chega vazia e a seção simplesmente não existe.
+const ultimi = posts.slice(0, 3);
+
+const dataIt = (iso: string) =>
+  new Date(iso).toLocaleDateString('it-IT', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+---
+
+{
+  ultimi.length > 0 && (
+    <section class="sezione diario" aria-labelledby="diario-titolo">
+      <div class="diario__intestazione">
+        <div>
+          <div class="battuta" aria-hidden="true">
+            <span /><span /><span /><span />
+          </div>
+          <p class="util">Diario</p>
+          <h2 id="diario-titolo" class="sr-only">
+            Diario
+          </h2>
+        </div>
+        <a class="diario__tutti util" href="/diario">
+          tutti i post →
+        </a>
+      </div>
+
+      <ul class="diario__lista" role="list">
+        {ultimi.map((p) => (
+          <li class="posto">
+            <a class="posto__link" href={`/diario/${p.slug}`}>
+              {p.cover_url && (
+                <img
+                  class="posto__cover"
+                  src={p.cover_url}
+                  width="640"
+                  height="400"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span class="posto__data util">{dataIt(p.created_at)}</span>
+              <span class="posto__titolo">{p.titolo}</span>
+              {p.sottotitolo && (
+                <span class="posto__sottotitolo">{p.sottotitolo}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .diario__intestazione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spazio-riga);
+  }
+
+  .diario__tutti {
+    color: var(--accento);
+    text-transform: none;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+
+  .diario__lista {
+    display: grid;
+    gap: var(--spazio-blocco);
+    margin-top: var(--spazio-blocco);
+  }
+
+  .posto__link {
+    display: grid;
+    gap: 0.4rem;
+    color: var(--testo);
+    text-decoration: none;
+  }
+
+  .posto__cover {
+    width: 100%;
+    border-radius: var(--raggio);
+    margin-bottom: 0.6rem;
+    object-fit: cover;
+  }
+
+  .posto__data {
+    color: var(--testo-secondario);
+  }
+
+  .posto__titolo {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-titolo);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height: 1.14;
+  }
+
+  .posto__link:hover .posto__titolo {
+    color: var(--accento);
+  }
+
+  .posto__sottotitolo {
+    color: var(--testo-secondario);
+  }
+
+  @media (min-width: 56rem) {
+    .diario__lista {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--spazio-blocco);
+      max-width: 72rem;
+    }
+  }
+</style>

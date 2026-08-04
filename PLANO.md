@@ -988,3 +988,196 @@ tipográficas, escala e o elemento de assinatura. São decisões da skill
 `FRONTEND-DESIGN`, com registro do porquê de cada cor vir do assunto —
 corpo em movimento, sala, som alto, calor, ritmo brasileiro dentro de
 arquitetura siciliana.
+
+---
+---
+
+# FASE 2 — PLANO DE DESIGN
+
+Passo 1 do método: decidir e justificar **antes** de codar. Cada escolha
+abaixo foi conferida contra a lista de proibições da Parte 2.1 do
+briefing, e o registro dessa conferência está no fim desta seção.
+
+## A. De onde vem a identidade
+
+O briefing (2.2) manda tirar a identidade do assunto, não de referência
+de dashboard. O assunto é **ritmo brasileiro dentro de arquitetura
+siciliana**. Fui buscar literalmente nos dois lugares:
+
+**Catania é uma cidade preta.** Foi reconstruída depois da erupção de
+1669 e do terremoto de 1693 usando a pedra que sobrou: **basalto do
+Etna**. Os prédios do centro são lava escura contornada de pedra calcária
+clara. Isso não é metáfora, é o material da cidade onde ele dá aula.
+
+**A laranja sanguínea é siciliana.** *Arancia rossa di Sicilia* é
+vermelha por dentro e laranja por fora, e é o produto agrícola que
+identifica a região do Etna. É exatamente a figura que o briefing
+descreve: calor brasileiro dentro de forma siciliana.
+
+Daí saem as três cores que importam. As outras três existem por função,
+não por gosto.
+
+## B. Cor — 6 valores
+
+| Token | Hex | De onde vem | Onde é usado |
+|---|---|---|---|
+| `--basalto` | `#191517` | Pedra de lava do Etna. Preto com desvio quente, nunca `#000` | Superfície escura: hero, números, interstícios |
+| `--calce` | `#E4E3DE` | Cal e pedra calcária siciliana. Cinza-pedra, **não** creme | Superfície clara: todas as seções de leitura |
+| `--cenere` | `#5C564F` | Cinza vulcânica | Texto secundário sobre claro |
+| `--sanguigna` | `#B02A15` | Laranja sanguínea, a polpa | Acento sobre claro: CTA, links |
+| `--sanguigna-viva` | `#F2603F` | A mesma laranja, a casca | Acento sobre escuro |
+| `--ionio` | `#17565F` | Mar Jônio, que Catania olha | Rótulos e detalhes frios |
+
+**Contraste conferido, não estimado.** Calculei os dez pares em uso:
+
+| Par | Ratio | Exigido | |
+|---|---|---|---|
+| corpo sobre claro | 14,08 | 4,5 | ✓ |
+| corpo sobre escuro | 14,08 | 4,5 | ✓ |
+| texto secundário | 5,64 | 4,5 | ✓ |
+| link sobre claro | 5,13 | 4,5 | ✓ |
+| texto do botão | 5,13 | 4,5 | ✓ |
+| acento sobre escuro | 5,62 | 4,5 | ✓ |
+| rótulo frio | 6,45 | 4,5 | ✓ |
+| foco de teclado | 14,08 | 3,0 | ✓ |
+
+A primeira versão da paleta reprovou em quatro pares. Os valores acima
+são a segunda, ajustada até passar.
+
+**Por que não há um cinza de texto secundário para fundo escuro:** as
+superfícies escuras da página são o hero, os números e os interstícios.
+Interstício tem só uma frase. Onde há legenda sobre escuro — sob os
+números — ela usa `--calce` cheio, em corpo menor. Escurecer texto
+secundário é convenção, não exigência, e sobre fundo escuro custa
+legibilidade sem devolver nada.
+
+## C. Tipografia — 3 famílias, 3 papéis
+
+Auto-hospedadas via npm (`@fontsource`). **Nenhuma requisição ao Google
+Fonts** — seria script de terceiro, cookie de terceiro e banner GDPR,
+exatamente o que a Parte 5.1 do briefing evita nos vídeos.
+
+| Papel | Família | Por quê |
+|---|---|---|
+| **Display** | **Archivo Variable** | Um arquivo com `font-weight: 100–900` **e** `font-stretch: 62%–125%`. Peso e largura extremos, que é o que a Parte 2.2 pede: tipografia de cartaz de baile |
+| **Corpo** | **Literata Variable** | Serifada desenhada para leitura em tela. Serifada no corpo dá credibilidade de ofício físico e afasta do parecer-SaaS |
+| **Utilitária** | **IBM Plex Mono** | Rótulos, anos, legendas. Largura fixa garante `tabular-nums` para o contador da Fase 3 sem tremer |
+
+**Onde a largura extrema é usada:** o H1 do hero e os quatro números vão
+em `font-stretch: 118%` com peso 800 — largo e pesado, empurrando as
+bordas. Títulos de seção em 105%. Corpo nunca. Uma coisa é ousada, o
+resto fica quieto (regra de contenção, 2.2).
+
+## D. Escala — 6 passos, com salto real
+
+O briefing proíbe "escala de 8 passos onde tudo parece igual". Entre
+corpo (~19px) e título de seção (~60px) há um salto de **3×**. Não há
+passo intermediário para preencher o vão — o vão é o efeito.
+
+```
+--passo-xl   clamp(3rem, 12vw, 8rem)        hero, números
+--passo-l    clamp(2rem, 6vw, 3.75rem)      títulos de seção
+--passo-m    clamp(1.75rem, 5.5vw, 3rem)    interstícios
+--passo-lead clamp(1.1875rem, 2.2vw, 1.5rem) subtítulo do hero
+--passo-base clamp(1.0625rem, 1.6vw, 1.1875rem) corpo
+--passo-util 0.78rem                        rótulos, maiúscula, espaçada
+```
+
+## E. Elemento de assinatura — a *battuta*
+
+Quatro traços verticais curtos, o quarto mais alto e em `--sanguigna`.
+Aparece acima de cada título de seção, no lugar de um fio de 1px.
+
+```
+│ │ │ █        │ │ │ █        │ │ │ █
+I NUMERI       COSA PORTO     CHI SONO
+```
+
+É a **contagem de entrada** de uma aula de dança: *um, dois, três,
+QUATRO*. O quarto traço é o tempo forte, onde a música entra.
+
+Por que serve como assinatura:
+- Vem do assunto, não de biblioteca de UI. Ninguém copia de outro site
+  porque nenhum outro site é sobre conduzir uma sala no ritmo
+- Substitui um fio genérico por algo que significa
+- É quieto. Não pisca, não anima, não pede atenção
+- Custa quatro `<span>` e nada de JS
+
+## F. Conferência contra a Parte 2.1
+
+Cada proibição, e o que eu fiz:
+
+| Proibido | Situação |
+|---|---|
+| Creme `#F4F1EA` + serifada display de alto contraste + terracota `#D97757` | **Evitado nos três eixos.** Claro é cinza-pedra `#E4E3DE`, não creme; display é sans de largura extrema, não serifada; acento é laranja sanguínea saturada `#B02A15`, não terracota apagada |
+| Quase-preto + **um único** acento verde-ácido ou vermelhão | **Evitado.** Há duas superfícies alternando e três matizes (laranja, azul jônio, cinza), não escuro-com-um-acento |
+| Layout de jornal: fios de 1px, raio zero, colunas densas | **Evitado.** Fio de 1px é substituído pela *battuta*; a medida de leitura é limitada a 62 caracteres |
+| Gradiente roxo→azul | Não existe no arquivo |
+| Glassmorphism, card com blur | Não existe. Não há card nenhum |
+| Inter / Poppins / Montserrat como display | Display é Archivo Expanded |
+| Grade de 3 colunas com ícone circular no topo | `COSA PORTO` é empilhado, com número grande na mono. Sem ícone, sem círculo, sem card |
+| Emoji em título de seção | Nenhum |
+| Blob orgânico animado no hero | Nenhum |
+| Tudo centralizado | Alinhado à esquerda em toda a página. Assimetria deliberada no hero, `COSA PORTO` e `CHI SONO` |
+| Paleta default do Tailwind | Não há Tailwind no projeto |
+
+## G. A foto do hero — o que foi possível
+
+O Trajano escolheu a foto dele conduzindo a multidão no shopping. É a
+foto certa: ele de costas, braço estendido, centenas de pessoas em
+movimento acompanhando. Diz "enche a sala" sem precisar de legenda.
+
+**Já estava no repositório: `hero-v3.jpg`, 960 × 636.** Não é a foto
+nova de 2400px — é a que eu tinha medido e classificado como pequena.
+
+O que isso obriga:
+
+| | |
+|---|---|
+| **Celular** | 960px cobre uma tela de 390px em densidade 2× com folga. **Funciona bem**, e é onde o público está |
+| **Desktop** | 960px não cobre uma faixa sangrando de 1440px. **Full-bleed está descartado** |
+
+**Solução:** no desktop a foto ocupa uma coluna de ~46% da largura,
+sangrando só na borda esquerda e no topo — que é exatamente o wireframe
+assimétrico já desenhado na seção 3. A 46% de 1440px são 662px de área,
+dentro do que 960px atende com nitidez.
+
+Ou seja: a assimetria que eu havia proposto por razão de composição
+acabou salvando a resolução. Mas é acomodação, não a solução.
+
+**A solução de verdade** é uma linha de pedido: a foto tem marca d'água
+**EDMAR CRUZ FOTOGRAFIA** no canto inferior direito. O original em alta
+existe, está com o fotógrafo. Pedir o arquivo resolve a resolução e, de
+passagem, a questão de uso — ver seção H.
+
+## H. Duas coisas que eu não decido sozinho
+
+**1. A marca d'água.** `hero-v3.jpg` traz *EDMAR CRUZ FOTOGRAFIA*
+impresso na imagem. Numa foto sangrando na borda, ela vai aparecer.
+
+Não recortei a marca. Cortar o crédito de um fotógrafo do arquivo dele
+não é decisão de implementação — é decisão do Trajano com o autor. As
+saídas honestas:
+
+- Pedir o original ao Edmar Cruz, sem marca, em alta. Resolve tudo
+- Manter a marca visível e creditar. Legítimo, e num hero fica estranho
+- Recortar, **com autorização dele**
+
+Enquanto não houver definição, a foto entra como está, marca inclusive.
+
+**2. A média fora do verão.** Pendência 4 do briefing, ainda aberta. Se
+for maior que 18, o número mais forte da página está subdimensionado.
+
+## I. O que a Fase 3 recebe
+
+Construído na Fase 2, **parado**, esperando movimento:
+
+- Os quatro números com o valor final em texto no HTML — o contador da
+  spec 3.1 só substitui o conteúdo
+- O botão fixo de WhatsApp, com o estilo pronto e escondido por classe.
+  Mostrar entre `GUARDA` e `COME LAVORIAMO` depende de
+  `IntersectionObserver`, que é da Fase 3
+- Os blocos estruturais marcados para reveal, sem nenhuma transição ainda
+- O formulário posta direto no Netlify Forms, funcionando sem JS. Os
+  estados inline de sucesso e erro que o briefing especifica na Seção 9
+  precisam de um `fetch` pequeno — Fase 3

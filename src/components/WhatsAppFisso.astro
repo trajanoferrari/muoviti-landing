@@ -1,0 +1,75 @@
+---
+import { WHATSAPP } from '../lib/contatto';
+
+// Decisão 1 do PLANO.md. Entre o CTA de COSA PORTO e o de COME
+// LAVORIAMO há seis blocos de conteúdo: no celular, 6 a 8 telas sem
+// nenhuma ação possível. Quem se convence no vídeo tem que rolar
+// muito para agir.
+//
+// Só no celular. No desktop a página é curta e os quatro CTAs bastam.
+//
+// FASE 2 entrega escondido. Mostrar entre GUARDA e COME LAVORIAMO
+// depende de IntersectionObserver, que é da Fase 3 — daí o
+// data-attribute e a classe `è-visibile` já previstos aqui.
+---
+
+<a class="wa-fisso" href={WHATSAPP} rel="noopener" data-wa-fisso>
+  <span aria-hidden="true">→</span> Parliamone su WhatsApp
+</a>
+
+<style>
+  .wa-fisso {
+    position: fixed;
+    inset-inline: var(--margine);
+    bottom: 0.9rem;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.85rem 1.2rem;
+
+    background: var(--sanguigna);
+    color: var(--calce);
+    font-family: var(--font-util);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--raggio);
+
+    /* Escondido até a Fase 3 ligar o observador. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease,
+      visibility 240ms;
+  }
+
+  .wa-fisso.e-visibile {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* Só no celular. */
+  @media (min-width: 56rem) {
+    .wa-fisso {
+      display: none;
+    }
+  }
+
+  /* Quem pediu menos movimento não recebe o deslizar, mas continua
+     recebendo o botão. */
+  @media (prefers-reduced-motion: reduce) {
+    .wa-fisso {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

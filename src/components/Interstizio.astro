@@ -1,0 +1,65 @@
+---
+// Respiro entre seções. Um componente, quatro textos.
+// Altura menor que a tela cheia: é respiro, não seção.
+// A entrada de cada um (deslocamento ou máscara) é da Fase 3.
+
+interface Props {
+  testo: string;
+  /** Marca de qual dos quatro é, para a Fase 3 dar entradas distintas. */
+  indice: 1 | 2 | 3 | 4;
+  /** Interstícios repetitivos saem no celular. Ver PLANO.md seção 4. */
+  soloDesktop?: boolean;
+}
+
+const { testo, indice, soloDesktop = false } = Astro.props;
+---
+
+<aside
+  class:list={['interstizio', 'su-basalto', { 'solo-desktop': soloDesktop }]}
+  data-interstizio={indice}
+>
+  <p class="interstizio__testo">{testo}</p>
+</aside>
+
+<style>
+  .interstizio {
+    background: var(--sfondo);
+    color: var(--testo);
+    padding: clamp(3rem, 8vw, 5.5rem) var(--margine);
+    /* Menor que a tela cheia, sempre. */
+    min-height: 48svh;
+    display: flex;
+    align-items: center;
+  }
+
+  .interstizio__testo {
+    font-family: var(--font-display);
+    font-stretch: var(--largura-titolo);
+    font-weight: 800;
+    font-size: var(--passo-m);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    /* Alinhado à esquerda. O briefing proíbe centralizar. */
+    max-width: 24ch;
+  }
+
+  @media (min-width: 56rem) {
+    .interstizio {
+      min-height: 42svh;
+    }
+    .interstizio__testo {
+      max-width: 34ch;
+    }
+  }
+
+  /* Cortes de celular do PLANO.md, seção 4. */
+  .solo-desktop {
+    display: none;
+  }
+
+  @media (min-width: 56rem) {
+    .solo-desktop {
+      display: flex;
+    }
+  }
+</style>

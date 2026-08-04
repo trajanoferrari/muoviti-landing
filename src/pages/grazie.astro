@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { WHATSAPP } from '../lib/contatto';
+
+// Destino do formulário quando o JavaScript está desligado.
+// Com JS, a Fase 3 mostra o mesmo texto inline e não sai da página.
+---
+
+<Base
+  titolo="Ricevuto — Trajano Ferrari"
+  descrizione="Messaggio ricevuto. Ti richiamo entro 24 ore."
+>
+  <main class="sezione grazie su-basalto">
+    <div class="battuta" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="grazie__titolo">Ricevuto. Ti richiamo entro 24 ore.</h1>
+    <p class="grazie__testo">Se preferisci fare prima, scrivimi direttamente.</p>
+    <a class="cta" href={WHATSAPP} rel="noopener">Scrivimi su WhatsApp</a>
+    <p class="grazie__ritorno">
+      <a href="/">← Torna alla pagina</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  .grazie {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .grazie__titolo {
+    font-size: var(--passo-l);
+    font-stretch: var(--largura-display);
+    margin-block: var(--spazio-riga) var(--spazio-blocco);
+    max-width: 22ch;
+  }
+
+  .grazie__testo {
+    margin-bottom: var(--spazio-blocco);
+  }
+
+  .grazie__ritorno {
+    margin-top: var(--spazio-sezione);
+  }
+</style>

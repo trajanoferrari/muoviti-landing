@@ -1,7 +1,6 @@
 /* ─────────────────────────────────────────────────────────────
-   base.css — reset e bases de acessibilidade.
-   Só infraestrutura: nenhuma decisão de design.
-   Cor e fonte vêm do tokens.css, na fase 2.
+   base.css — reset, bases de acessibilidade e primitivas.
+   Toda cor e todo tamanho vêm de tokens.css.
    ───────────────────────────────────────────────────────────── */
 
 *,
@@ -38,25 +37,31 @@ ol[role='list'] {
 
 body {
   min-height: 100svh;
-  line-height: 1.5;
+  background: var(--calce);
+  color: var(--basalto);
+  font-family: var(--font-corpo);
+  font-size: var(--passo-base);
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Títulos: entrelinha curta, sem quebra estranha. */
+/* Display: largo e pesado. Nunca no corpo. */
 h1,
 h2,
-h3,
-h4 {
-  line-height: 1.1;
+h3 {
+  font-family: var(--font-display);
+  font-stretch: var(--largura-titolo);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
 p {
   text-wrap: pretty;
+  max-width: var(--misura);
 }
 
-/* Imagens: nunca além do contêiner, nunca deformadas.
-   width/height continuam obrigatórios no markup (briefing 5.5). */
 img,
 picture,
 video,
@@ -65,6 +70,12 @@ svg {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+a {
+  color: var(--accento);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 input,
@@ -79,13 +90,13 @@ button {
   cursor: pointer;
 }
 
-/* Foco de teclado sempre visível. A cor vem dos tokens. */
+/* Foco de teclado sempre visível, nas duas superfícies.
+   currentColor herda o texto da seção, então funciona em ambas. */
 :focus-visible {
-  outline: 2px solid currentColor;
+  outline: var(--tratto) solid currentColor;
   outline-offset: 3px;
 }
 
-/* Escondido na tela, legível pelo leitor de tela. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -98,7 +109,108 @@ button {
   border: 0;
 }
 
-/* Respeitado em toda animação do site (briefing 3.1, 5.5). */
+/* ── PRIMITIVAS ──────────────────────────────────────────────── */
+
+/* Toda seção herda superfície e respiro daqui. Componentes NÃO
+   redeclaram padding vertical: era o erro de especificidade que o
+   briefing avisa na Fase 2 (classe de seção anulando a de
+   elemento em margin e padding). */
+.sezione {
+  background: var(--sfondo);
+  color: var(--testo);
+  padding-block: var(--spazio-sezione);
+  padding-inline: var(--margine);
+}
+
+/* Rótulo utilitário: kicker, ano, legenda. */
+.util {
+  font-family: var(--font-util);
+  font-size: var(--passo-util);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ionio);
+  line-height: 1.4;
+}
+
+.su-basalto .util {
+  color: var(--accento);
+}
+
+/* Título de seção. */
+.titolo {
+  font-size: var(--passo-l);
+  max-width: 28ch;
+  margin-block: var(--spazio-riga) var(--spazio-blocco);
+}
+
+/* ── ASSINATURA: a battuta ───────────────────────────────────────
+   Contagem de entrada da aula: um, dois, três, QUATRO.
+   O quarto traço é o tempo forte, onde a música entra.
+   Substitui o fio de 1px que o briefing proíbe.               */
+.battuta {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.34rem;
+  height: 1.15rem;
+}
+
+.battuta span {
+  display: block;
+  width: var(--tratto);
+  height: 0.6rem;
+  background: var(--testo);
+  opacity: 0.45;
+}
+
+.battuta span:last-child {
+  height: 1.15rem;
+  background: var(--accento);
+  opacity: 1;
+}
+
+/* ── CTA ─────────────────────────────────────────────────────────
+   Um só desenho, quatro lugares. Sem sombra, sem gradiente.   */
+.cta {
+  /* inline-flex e não inline-block: com min-height, o inline-block
+     deixa o texto fora do centro vertical. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sanguigna);
+  color: var(--calce);
+  font-family: var(--font-util);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.05rem 1.6rem;
+  border-radius: var(--raggio);
+  /* Área de toque confortável no celular sem depender do padding. */
+  min-height: 48px;
+}
+
+.su-basalto .cta {
+  background: var(--sanguigna-viva);
+  color: var(--basalto);
+}
+
+.cta:hover {
+  background: var(--basalto);
+  color: var(--calce);
+}
+
+.su-basalto .cta:hover {
+  background: var(--calce);
+  color: var(--basalto);
+}
+
+/* ── REDE DE SEGURANÇA DE MOVIMENTO ─────────────────────────────
+   A Fase 2 quase não anima, mas a Fase 3 vai. Isto garante que
+   qualquer animação futura respeite `prefers-reduced-motion` mesmo
+   se quem escrever esquecer de tratar caso a caso.
+   Exigência da Parte 5.5 do briefing.                            */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -107,5 +219,9 @@ button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

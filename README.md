@@ -186,8 +186,8 @@ contradizem sobre tipografia, paleta e espaçamento.
 | Fase | Skill | Entrega | Status |
 |---|---|---|---|
 | 0 · Fundação | nenhuma | repo, Astro, Supabase, Netlify | ✅ feito |
-| 1 · Plano | `UI UX PRO MAX` | `PLANO.md`, nenhum código | a fazer |
-| 2 · Visual | `FRONTEND-DESIGN` | tokens + seções estáticas | a fazer |
+| 1 · Plano | ~~`UI UX PRO MAX`~~ | `PLANO.md`, nenhum código | ✅ feito |
+| 2 · Visual | ~~`FRONTEND-DESIGN`~~ | tokens + seções estáticas | ✅ feito |
 | 3 · Movimento | `MOTION DESIGN SKILL` | contador, reveals, interstícios | a fazer |
 | 4 · Diário | nenhuma | Supabase, `/admin`, `/diario` | a fazer |
 | 5 · Auditoria | `WEB DESIGN GUIDELINES` | relatório + correções | a fazer |
@@ -195,6 +195,24 @@ contradizem sobre tipografia, paleta e espaçamento.
 
 Cada fase termina com um commit. Nenhuma fase começa sem a anterior
 commitada.
+
+> **Nenhuma das cinco skills de design está instalada nesta conta.** As
+> fases 1 e 2 foram feitas sem elas, seguindo a especificação do
+> briefing e conferindo cada decisão contra a lista de proibições da
+> Parte 2.1. É substituição, não a coisa pedida — está registrado aqui
+> para quem ler o repositório depois saber.
+
+### O que a fase 2 mediu, em vez de estimar
+
+| | |
+|---|---|
+| Contraste | 10 pares em uso, todos passam AA. A primeira paleta reprovava em 4 |
+| Altura no celular | 11 065 px = **13,1 telas**, dentro da estimativa de 13–15 do plano |
+| Rolagem horizontal | nenhuma, em 390 / 1280 / 1440 px |
+| CTA do hero na dobra | sim, nos três tamanhos |
+| Acessibilidade | 1 `h1`, zero saltos de título, zero imagem sem `alt`, zero campo sem `label`, zero alvo de toque < 44 px |
+| Peso no celular | **329 KB** (169 KB fontes + 160 KB imagens) |
+| Imagens | WebP a q72: 453 KB → 304 KB (−33%) |
 
 ---
 
@@ -204,9 +222,12 @@ commitada.
   19 MB.** Com `preload="none"` eles não afetam o LCP, mas quem aperta
   play no 4G espera demais. Precisam ser recodificados (H.264 720p,
   CRF ~24, áudio 96 kbps → algo entre 2 e 4 MB) antes de ir ao ar.
-- **As imagens são PNG/JPG não otimizados** (`lifestyle.png` 788 KB,
-  `hero.png` 688 KB). Converter para WebP na fase 2, sempre com `width`
-  e `height` declarados.
+- **A foto do hero tem 960 px de largura.** Serve no celular, mas não
+  cobre uma faixa sangrando no desktop — daí a coluna de 46%. A foto tem
+  marca d'água *EDMAR CRUZ FOTOGRAFIA*; pedir o original em alta ao
+  fotógrafo resolve resolução e uso de uma vez. Ver PLANO.md, seções G e H.
+- **As imagens usadas já estão em WebP** (q72, −33%). O acervo em
+  `public/img/` continua em JPG/PNG: é fonte, não é servido.
 - `public/img/` contém todo o material disponível, não a seleção final:
   escolher é pendência do Trajano (ver abaixo).
 - `directives/` e `execution/` são restos do antigo fluxo de empacotar

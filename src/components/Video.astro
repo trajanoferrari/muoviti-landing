@@ -1,0 +1,67 @@
+---
+// Vídeo único, auto-hospedado. Zero embed do Instagram.
+// preload="none": o leitor vê o poster 100% das vezes, o vídeo só
+// se decidir. Por isso o poster tem que ser uma foto boa, não um
+// frame congelado feio.
+//
+// PENDENTE: aula.mp4 tem 25 MB. Recodificar é tarefa da Fase 3, e
+// só faz sentido depois que o Trajano disser quais dos 12 reels
+// entram — senão recodifico o material errado.
+const VIDEO = '/video/aula.mp4';
+const POSTER = { src: '/img/port-23.webp', w: 960, h: 636 };
+---
+
+<section class="sezione video" aria-labelledby="video-titolo">
+  <div class="battuta" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p class="util">Guarda</p>
+
+  <h2 id="video-titolo" class="titolo">Un minuto vale più di una pagina.</h2>
+
+  <figure class="video__figura">
+    <video
+      controls
+      preload="none"
+      poster={POSTER.src}
+      width={POSTER.w}
+      height={POSTER.h}
+      playsinline
+    >
+      <source src={VIDEO} type="video/mp4" />
+      <p>
+        Il tuo browser non riproduce questo video.
+        <a href={VIDEO}>Scaricalo qui</a>.
+      </p>
+    </video>
+    <figcaption class="util video__didascalia">
+      Questo è il livello di energia. Ogni lezione.
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .video__figura {
+    margin-top: var(--spazio-blocco);
+  }
+
+  .video__figura video {
+    width: 100%;
+    height: auto;
+    background: var(--basalto);
+    border-radius: var(--raggio);
+  }
+
+  .video__didascalia {
+    margin-top: var(--spazio-riga);
+    color: var(--testo-secondario);
+    letter-spacing: 0.08em;
+  }
+
+  /* Largo, quase sangrando, mas não centralizado num bloco estreito. */
+  @media (min-width: 56rem) {
+    .video__figura {
+      max-width: 74rem;
+    }
+  }
+</style>

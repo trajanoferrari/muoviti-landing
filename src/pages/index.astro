@@ -1,34 +1,77 @@
 ---
-// FASE 0 — só infraestrutura.
-// As seções (Hero, Numeri, Interstizio, ...) são construídas na FASE 2.
-//
-// Comentários em português; todo texto que o visitante lê fica em italiano.
-import '../styles/tokens.css';
-import '../styles/base.css';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Interstizio from '../components/Interstizio.astro';
+import Numeri from '../components/Numeri.astro';
+import Valore from '../components/Valore.astro';
+import Video from '../components/Video.astro';
+import Metodo from '../components/Metodo.astro';
+import ChiSono from '../components/ChiSono.astro';
+import Percorso from '../components/Percorso.astro';
+import Testimonianze from '../components/Testimonianze.astro';
+import ComeLavoriamo from '../components/ComeLavoriamo.astro';
+import Contatto from '../components/Contatto.astro';
+import DiarioPreview from '../components/DiarioPreview.astro';
+import WhatsAppFisso from '../components/WhatsAppFisso.astro';
+import type { Post } from '../lib/supabase';
 
-const titolo = 'Trajano Ferrari — Cardio Dance Brasil a Catania';
-const descrizione =
-  'Cardio Dance Brasil a Catania. Sala piena tre mattine a settimana, tutto l’anno.';
+// FASE 4 liga isto ao Supabase. Enquanto a lista está vazia, a
+// seção Diario não renderiza — que é a regra do briefing.
+const posts: Post[] = [];
 ---
 
-<!doctype html>
-<html lang="it">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titolo}</title>
-    <meta name="description" content={descrizione} />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={titolo} />
-    <meta property="og:description" content={descrizione} />
-    <meta property="og:url" content={Astro.site} />
-    <link rel="canonical" href={Astro.site} />
-  </head>
-  <body>
-    <main>
-      <h1>Trajano Ferrari</h1>
-      <p>Cardio Dance Brasil · Catania</p>
-      <p><small>Fase 0 — fondazione. Il sito si costruisce nelle fasi 2–6.</small></p>
-    </main>
-  </body>
-</html>
+<Base
+  titolo="Trajano Ferrari — Cardio Dance Brasil a Catania"
+  descrizione="Cardio Dance Brasil a Catania. Sala piena tre mattine a settimana, tutto l'anno. Lezione dimostrativa gratuita."
+>
+  <Hero />
+
+  <main>
+    <!-- Corte 1 do celular: repete a sub do hero e a legenda dos
+         números, que vem logo depois. Três vezes o mesmo fato em
+         duas telas. -->
+    <Interstizio
+      indice={1}
+      soloDesktop
+      testo="Ore 9 del mattino. Tre volte a settimana. Anche a luglio."
+    />
+
+    <Numeri />
+    <Valore />
+
+    <!-- A tese da página. Não repete nada, fica sempre. -->
+    <Interstizio
+      indice={2}
+      testo="Riempire una lezione è facile. Difficile è riempirla di nuovo la settimana dopo."
+    />
+
+    <Video />
+    <Metodo />
+
+    <!-- Corte 1: repete literalmente o "13 anni davanti a una sala"
+         dos números. -->
+    <Interstizio
+      indice={3}
+      soloDesktop
+      testo="Tredici anni davanti a una sala. Gli ultimi quattro a Catania."
+    />
+
+    <ChiSono />
+    <Percorso />
+    <Testimonianze />
+
+    <!-- O quarto interstício, que o briefing anunciava e não
+         detalhava. Decisão 7: antecipa a aula grátis e assume o
+         risco em voz alta, na transição de prova para proposta. -->
+    <Interstizio
+      indice={4}
+      testo="La prima lezione la offro io. Se non funziona, non se ne parla più."
+    />
+
+    <ComeLavoriamo />
+    <Contatto />
+    <DiarioPreview posts={posts} />
+  </main>
+
+  <WhatsAppFisso />
+</Base>
