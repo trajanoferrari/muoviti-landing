@@ -64,15 +64,19 @@ da chave. A chave `service_role` nunca entra neste repositório.
 src/
   pages/
     index.astro           ← home (fase 2)
-    diario/index.astro    ← lista de posts (fase 4)
-    diario/[slug].astro   ← post individual (fase 4)
-    admin/index.astro     ← login + editor (fase 4)
+    diario/index.astro    ← lista de posts
+    diario/post.astro     ← post individual (ver nota abaixo)
+    admin/index.astro     ← login + editor
+    grazie.astro          ← destino do formulário sem JS
   components/             ← uma seção por componente (fase 2)
   styles/
     tokens.css            ← única fonte de cor e tipografia
     base.css              ← reset e bases de acessibilidade
   lib/
     supabase.ts           ← cliente + tipo Post + slugify
+    contatto.ts           ← número de WhatsApp, em um lugar só
+    diario.ts             ← consultas do diário, com teto de espera
+    markdown.ts           ← markdown simples, escrito à mão
     countUp.ts            ← contador dos números (fase 3)
     reveal.ts             ← reveal de seção (fase 3)
 supabase/
@@ -166,6 +170,32 @@ fica amarrada àquele usuário, e não ao papel em geral.
 
 ---
 
+## Diário: por que `post.astro` e não `[slug].astro`
+
+A Parte 5.2 do briefing prevê `diario/[slug].astro`. O arquivo se chama
+`post.astro` por um motivo que vale registrar.
+
+Com saída estática, `[slug].astro` exige `getStaticPaths`, que roda no
+**build**. Um post novo só apareceria depois de uma nova build no
+Netlify — e o critério de conclusão da fase 4 é justamente publicar pelo
+`/admin` e ver no ar **sem rebuild**.
+
+Então: uma única página, e uma reescrita em `netlify.toml` manda
+`/diario/qualquer-slug` para ela com status 200 (a URL não muda). A
+página lê o slug do caminho e busca no Supabase. Arquivo estático tem
+precedência sobre redirect no Netlify, então `/diario` continua servindo
+a própria lista.
+
+Consequência para desenvolvimento local: em `astro preview` a reescrita
+não existe, então um post se abre por
+`/diario/post/?slug=nome-do-post`. Em produção o caminho limpo funciona.
+
+O que é buscado no navegador, e não no build: a lista de `/diario`, o
+post individual e a seção Diario da home. Ler é seguro de expor — a
+policy `public read published` do Postgres só devolve linhas com
+`pubblicato = true`, então um rascunho não sai nem se alguém chamar a API
+na mão. Isso foi testado.
+
 ## Netlify
 
 O `netlify.toml` já está configurado: build `npm run build`, publish
@@ -189,7 +219,7 @@ contradizem sobre tipografia, paleta e espaçamento.
 | 1 · Plano | ~~`UI UX PRO MAX`~~ | `PLANO.md`, nenhum código | ✅ feito |
 | 2 · Visual | ~~`FRONTEND-DESIGN`~~ | tokens + seções estáticas | ✅ feito |
 | 3 · Movimento | `MOTION DESIGN SKILL` | contador, reveals, interstícios | a fazer |
-| 4 · Diário | nenhuma | Supabase, `/admin`, `/diario` | a fazer |
+| 4 · Diário | nenhuma | Supabase, `/admin`, `/diario` | ✅ feito |
 | 5 · Auditoria | `WEB DESIGN GUIDELINES` | relatório + correções | a fazer |
 | 6 · Refino | `IMPECCABLE` | remoção de ruído visual | a fazer |
 

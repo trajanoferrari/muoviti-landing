@@ -13,11 +13,6 @@ import ComeLavoriamo from '../components/ComeLavoriamo.astro';
 import Contatto from '../components/Contatto.astro';
 import DiarioPreview from '../components/DiarioPreview.astro';
 import WhatsAppFisso from '../components/WhatsAppFisso.astro';
-import type { Post } from '../lib/supabase';
-
-// FASE 4 liga isto ao Supabase. Enquanto a lista está vazia, a
-// seção Diario não renderiza — que é a regra do briefing.
-const posts: Post[] = [];
 ---
 
 <Base
@@ -70,7 +65,8 @@ const posts: Post[] = [];
 
     <ComeLavoriamo />
     <Contatto />
-    <DiarioPreview posts={posts} />
+    <!-- Busca os posts no navegador e só aparece se houver algum. -->
+    <DiarioPreview />
   </main>
 
   <WhatsAppFisso />

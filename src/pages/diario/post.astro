@@ -1,0 +1,178 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// A Parte 5.2 do briefing prevê `diario/[slug].astro`. Aqui o arquivo se
+// chama `post.astro` por um motivo técnico:
+//
+// Com saída estática, `[slug].astro` precisa de `getStaticPaths`, que
+// roda no BUILD. Um post novo só apareceria depois de uma nova build —
+// e o critério de conclusão da Fase 4 é justamente publicar pelo /admin
+// e ver no ar SEM rebuild.
+//
+// Solução: uma única página, e uma reescrita no netlify.toml manda
+// /diario/qualquer-coisa para cá com status 200 (a URL não muda). O
+// arquivo estático /diario/index.html tem precedência, então a lista
+// continua funcionando.
+---
+
+<Base titolo="Diario — Trajano Ferrari" descrizione="Appunti dalla sala.">
+  <main class="sezione posto-pagina">
+    <div class="battuta" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="util"><a href="/diario">← Diario</a></p>
+
+    <p class="stato util" data-stato>Carico…</p>
+
+    <article data-articolo hidden>
+      <p class="data util" data-data></p>
+      <h1 class="posto__titolo" data-titolo></h1>
+      <p class="posto__sottotitolo" data-sottotitolo hidden></p>
+      <img class="posto__cover" data-cover hidden alt="" decoding="async" />
+      <div class="prosa" data-testo></div>
+      <div class="extra" data-extra hidden></div>
+    </article>
+
+    <p class="posto__ritorno">
+      <a href="/diario">← Tutti i post</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  .posto-pagina {
+    /* Medida de leitura: um post é texto longo, e acima de ~65
+       caracteres o olho perde a linha ao voltar. */
+    max-width: calc(var(--misura) + var(--margine) * 2);
+  }
+
+  .stato {
+    color: var(--testo-secondario);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .posto__titolo {
+    font-size: var(--passo-l);
+    font-stretch: var(--largura-display);
+    margin-block: var(--spazio-riga) var(--spazio-riga);
+  }
+
+  .posto__sottotitolo {
+    font-size: var(--passo-lead);
+    color: var(--testo-secondario);
+    margin-bottom: var(--spazio-blocco);
+  }
+
+  .posto__cover {
+    width: 100%;
+    height: auto;
+    border-radius: var(--raggio);
+    margin-bottom: var(--spazio-blocco);
+  }
+
+  .prosa :global(p),
+  .prosa :global(ul),
+  .prosa :global(blockquote) {
+    margin-bottom: var(--spazio-riga);
+  }
+
+  .prosa :global(h2),
+  .prosa :global(h3) {
+    margin-block: var(--spazio-blocco) var(--spazio-riga);
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+  }
+
+  .prosa :global(ul) {
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .prosa :global(blockquote) {
+    border-left: var(--tratto) solid var(--accento);
+    padding-left: var(--spazio-riga);
+    margin-left: 0;
+  }
+
+  .extra {
+    display: grid;
+    gap: var(--spazio-riga);
+    margin-top: var(--spazio-blocco);
+  }
+
+  .extra :global(img) {
+    width: 100%;
+    border-radius: var(--raggio);
+  }
+
+  .posto__ritorno {
+    margin-top: var(--spazio-sezione);
+  }
+</style>
+
+<script>
+  import { postDaSlug, dataIt, slugDallaUrl } from '../../lib/diario';
+  import { markdown, estratto } from '../../lib/markdown';
+
+  const q = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
+  const stato = q('[data-stato]');
+  const articolo = q('[data-articolo]');
+
+  const slug = slugDallaUrl();
+
+  if (!slug) {
+    stato.textContent = 'Indirizzo del post non valido.';
+  } else {
+    try {
+      const p = await postDaSlug(slug);
+
+      if (!p) {
+        // Distingue "não existe" de "falhou": são problemas diferentes
+        // e o leitor faz coisas diferentes com cada um.
+        stato.textContent = 'Questo post non esiste, o non è più pubblicato.';
+      } else {
+        q('[data-data]').textContent = dataIt(p.created_at);
+        q('[data-titolo]').textContent = p.titolo;
+        document.title = `${p.titolo} — Trajano Ferrari`;
+        document
+          .querySelector('meta[name="description"]')
+          ?.setAttribute('content', p.sottotitolo || estratto(p.testo));
+
+        if (p.sottotitolo) {
+          const s = q('[data-sottotitolo]');
+          s.textContent = p.sottotitolo;
+          s.hidden = false;
+        }
+
+        if (p.cover_url) {
+          const c = q<HTMLImageElement>('[data-cover]');
+          c.src = p.cover_url;
+          c.hidden = false;
+        }
+
+        // markdown() escapa o HTML antes de transformar, então isto não
+        // é um vetor de injeção.
+        q('[data-testo]').innerHTML = markdown(p.testo);
+
+        if (p.foto_extra?.length) {
+          const e = q('[data-extra]');
+          e.innerHTML = p.foto_extra
+            .map(
+              (u) =>
+                `<img src="${encodeURI(u)}" alt="" loading="lazy" decoding="async" />`
+            )
+            .join('');
+          e.hidden = false;
+        }
+
+        articolo.hidden = false;
+        stato.hidden = true;
+      }
+    } catch (e) {
+      stato.textContent =
+        'Non riesco a caricare il post. Controlla la connessione e ricarica la pagina.';
+      console.error('[diario/post]', e);
+    }
+  }
+</script>

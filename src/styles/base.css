@@ -72,6 +72,14 @@ svg {
   height: auto;
 }
 
+/* A regra acima vence o `display: none` que o navegador dá a [hidden],
+   porque uma regra de autor bate a folha do agente. Sem isto, uma <img
+   hidden> continua ocupando espaço — foi o que aconteceu com a capa
+   escondida de um post sem imagem. */
+[hidden] {
+  display: none !important;
+}
+
 a {
   color: var(--accento);
   text-decoration-thickness: 1px;

@@ -1,0 +1,135 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Casca estática. A lista é buscada no navegador, para um post novo
+// aparecer sem rebuild.
+---
+
+<Base
+  titolo="Diario — Trajano Ferrari"
+  descrizione="Appunti dalla sala. Cardio Dance Brasil, Catania."
+>
+  <main class="sezione diario-pagina">
+    <div class="battuta" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="util"><a href="/">← Trajano Ferrari</a></p>
+
+    <h1 class="diario-pagina__titolo">Diario</h1>
+
+    <p class="diario-pagina__intro">Appunti dalla sala.</p>
+
+    <p class="stato util" data-stato>Carico…</p>
+
+    <ul class="elenco" role="list" data-elenco hidden></ul>
+  </main>
+</Base>
+
+<style>
+  .diario-pagina__titolo {
+    font-size: var(--passo-l);
+    font-stretch: var(--largura-display);
+    margin-block: var(--spazio-riga) var(--spazio-riga);
+  }
+
+  .diario-pagina__intro {
+    color: var(--testo-secondario);
+    margin-bottom: var(--spazio-blocco);
+  }
+
+  .stato {
+    color: var(--testo-secondario);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .elenco {
+    display: grid;
+    gap: var(--spazio-blocco);
+    margin-top: var(--spazio-blocco);
+  }
+
+  .voce a {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--testo);
+    text-decoration: none;
+    padding-top: var(--spazio-riga);
+    border-top: var(--tratto) solid
+      color-mix(in srgb, var(--testo) 16%, transparent);
+  }
+
+  .voce img {
+    width: 100%;
+    border-radius: var(--raggio);
+    margin-bottom: 0.6rem;
+    object-fit: cover;
+  }
+
+  .voce h2 {
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+  }
+
+  .voce a:hover h2 {
+    color: var(--accento);
+  }
+
+  .voce .data {
+    color: var(--testo-secondario);
+  }
+
+  .voce p {
+    color: var(--testo-secondario);
+    margin: 0;
+  }
+
+  @media (min-width: 56rem) {
+    .elenco {
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      gap: var(--spazio-sezione) var(--spazio-blocco);
+      max-width: 74rem;
+    }
+  }
+</style>
+
+<script>
+  import { tuttiPost, dataIt } from '../../lib/diario';
+
+  const stato = document.querySelector<HTMLElement>('[data-stato]')!;
+  const elenco = document.querySelector<HTMLElement>('[data-elenco]')!;
+
+  const testo = (s: string) => {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  };
+
+  try {
+    const posts = await tuttiPost();
+
+    if (posts.length === 0) {
+      stato.textContent = 'Ancora nessun post.';
+    } else {
+      elenco.innerHTML = posts
+        .map(
+          (p) => `
+        <li class="voce">
+          <a href="/diario/${encodeURIComponent(p.slug)}">
+            ${p.cover_url ? `<img src="${testo(p.cover_url)}" alt="" width="640" height="400" loading="lazy" decoding="async" />` : ''}
+            <span class="data util">${testo(dataIt(p.created_at))}</span>
+            <h2>${testo(p.titolo)}</h2>
+            ${p.sottotitolo ? `<p>${testo(p.sottotitolo)}</p>` : ''}
+          </a>
+        </li>`
+        )
+        .join('');
+      elenco.hidden = false;
+      stato.hidden = true;
+    }
+  } catch (e) {
+    // Diz o que falhou, não "errore generico".
+    stato.textContent =
+      'Non riesco a caricare i post. Controlla la connessione e ricarica la pagina.';
+    console.error('[diario]', e);
+  }
+</script>
