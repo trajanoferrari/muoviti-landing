@@ -228,12 +228,34 @@ na mão. Isso foi testado.
 
 ## Netlify
 
-O `netlify.toml` já está configurado: build `npm run build`, publish
-`dist`. Falta fazer uma vez, no painel:
+### ⚠️ O site NÃO está ligado ao GitHub
 
-1. *Add new site → Import from GitHub* → este repositório
-2. Cadastrar as duas variáveis de ambiente acima
-3. Ligar o domínio `trajanoferrari.it`
+O projeto `wonderful-liger-b703cf` (domínio `trajanoferrari.it`) foi criado
+por **Netlify Drop** — arrastando uma pasta. Todos os deploys aparecem como
+*"Build from drop deployment"*, e o último é de 8 de julho.
+
+Consequência: **`git push` não publica nada.** Não há build acontecendo no
+Netlify, o `netlify.toml` não é lido, e as variáveis de ambiente não têm
+efeito — elas só valem durante um build.
+
+Eu havia marcado a fase 0 como concluída por ter configurado o
+`netlify.toml`, mas o critério do briefing é *"página no ar no domínio via
+`git push`"*, e isso nunca chegou a funcionar. Não era verificável do lado
+do Claude: não há acesso à API do Netlify nesta sessão.
+
+**Para resolver**, no painel:
+
+1. *Project configuration → Build & deploy → Continuous deployment →*
+   **Link repository** → GitHub → `muoviti-landing`, branch `main`
+2. Build command e publish directory: deixar como vêm — estão no
+   `netlify.toml`
+3. *Project configuration → Environment variables*: cadastrar as duas
+   variáveis acima
+4. *Deploys → Trigger deploy → Deploy site*
+
+Se a opção de ligar repositório não existir para um site criado por Drop,
+o caminho é criar um site novo a partir do GitHub e mover o domínio
+`trajanoferrari.it` para ele.
 
 ---
 
@@ -314,13 +336,17 @@ Sem estes itens o site não vai ao ar:
 
 Acrescentadas na fase 0:
 
-7. [ ] Desativar o cadastro público no Supabase *(ver acima — é o item
-   mais urgente da lista)*
-8. [ ] Criar o usuário único do `/admin`
+7. [x] ~~Desativar o cadastro público no Supabase~~ — feito
+   *(não verificável pelo Claude: a config fica na plataforma, não no banco)*
+8. [x] ~~Criar o usuário único do `/admin`~~ — `trajanoferrari@gmail.com`,
+   confirmado, com senha
 9. [x] ~~Liberar escrita do repositório para o Claude no GitHub~~ — feito
    *(faltava instalar o GitHub App, não uma permissão do app OAuth)*
-10. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
-11. [ ] Cadastrar as duas variáveis de ambiente no Netlify
-12. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
-13. [x] ~~Reconectar o conector Supabase na conta pessoal~~ — feito
-14. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`
+10. [x] ~~Juntar o trabalho no `main`~~ — feito
+11. [ ] 🔴 **Ligar o Netlify ao repositório do GitHub** — ver seção Netlify.
+    É o que trava tudo: hoje `git push` não publica
+12. [ ] 🔴 Cadastrar as duas variáveis de ambiente no Netlify
+13. [ ] Mandar os 7 MP4 dos reels *(ver seção Vídeos)*
+14. [x] ~~Reconectar o conector Supabase na conta pessoal~~ — feito
+15. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`
+16. [ ] Pedir ao Edmar Cruz o original do hero em alta, sem marca d'água
