@@ -90,9 +90,15 @@ Projeto já criado e migrado:
 | | |
 |---|---|
 | Nome | `trajanoferrari-it` |
+| Conta | **`crosscardioitalia@gmail.com`** — a mesma do Cross Cardio Gestional |
 | Região | `eu-central-1` (Frankfurt) |
 | URL | `https://xjtwzhavbyiiwsivvcst.supabase.co` |
 | Plano | free, € 0/mês |
+
+⚠️ Atenção ao entrar no painel: a conta pessoal `trajanoferrari@gmail.com`
+é **outra** e tem projetos diferentes (`fitsites` e um segundo, ambos
+pausados, sem relação com este site). Link direto para o projeto certo:
+https://supabase.com/dashboard/project/xjtwzhavbyiiwsivvcst
 
 As migrações em `supabase/migrations/` já estão aplicadas. São
 idempotentes: podem ser rodadas de novo no *SQL Editor* sem estragar
@@ -207,6 +213,8 @@ Acrescentadas na fase 0:
 6. [ ] Desativar o cadastro público no Supabase *(ver acima — é o item
    mais urgente da lista)*
 7. [ ] Criar o usuário único do `/admin`
-8. [ ] Liberar escrita do repositório para o Claude no GitHub
-9. [ ] Ligar o repositório ao Netlify e cadastrar as duas variáveis
-10. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
+8. [x] ~~Liberar escrita do repositório para o Claude no GitHub~~ — feito
+   *(faltava instalar o GitHub App, não uma permissão do app OAuth)*
+9. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
+10. [ ] Cadastrar as duas variáveis de ambiente no Netlify
+11. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
