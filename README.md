@@ -218,7 +218,7 @@ contradizem sobre tipografia, paleta e espaçamento.
 | 0 · Fundação | nenhuma | repo, Astro, Supabase, Netlify | ✅ feito |
 | 1 · Plano | ~~`UI UX PRO MAX`~~ | `PLANO.md`, nenhum código | ✅ feito |
 | 2 · Visual | ~~`FRONTEND-DESIGN`~~ | tokens + seções estáticas | ✅ feito |
-| 3 · Movimento | `MOTION DESIGN SKILL` | contador, reveals, interstícios | a fazer |
+| 3 · Movimento | (sem skill) | contador, reveals, interstícios | ✅ feito |
 | 4 · Diário | nenhuma | Supabase, `/admin`, `/diario` | ✅ feito |
 | 5 · Auditoria | `WEB DESIGN GUIDELINES` | relatório + correções | a fazer |
 | 6 · Refino | `IMPECCABLE` | remoção de ruído visual | a fazer |
