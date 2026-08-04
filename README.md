@@ -85,33 +85,46 @@ public/
 
 ## Supabase
 
-Projeto já criado e migrado:
+Projeto em uso:
 
 | | |
 |---|---|
-| Nome | `trajanoferrari-it` |
-| Conta | **`crosscardioitalia@gmail.com`** — a mesma do Cross Cardio Gestional |
-| Região | `eu-central-1` (Frankfurt) |
-| URL | `https://xjtwzhavbyiiwsivvcst.supabase.co` |
+| Conta | `trajanoferrari@gmail.com`, organização **Trajano Ferrari** |
+| URL | `https://ojmccvnopinkbnpbgrof.supabase.co` |
+| Painel | https://supabase.com/dashboard/project/ojmccvnopinkbnpbgrof |
 | Plano | free, € 0/mês |
 
-⚠️ Atenção ao entrar no painel: a conta pessoal `trajanoferrari@gmail.com`
-é **outra** e tem projetos diferentes (`fitsites` e um segundo, ambos
-pausados, sem relação com este site). Link direto para o projeto certo:
-https://supabase.com/dashboard/project/xjtwzhavbyiiwsivvcst
-
-As migrações em `supabase/migrations/` já estão aplicadas. São
-idempotentes: podem ser rodadas de novo no *SQL Editor* sem estragar
-nada.
+O schema fica em `supabase/migrations/`, e as migrações são idempotentes:
+podem ser rodadas de novo no *SQL Editor* sem estragar nada.
 
 - `0001_posts.sql` — tabela `posts` + RLS
 - `0002_storage_blog.sql` — bucket `blog` + policies
 
-Testado direto no banco, assumindo cada papel:
+### Estado da verificação
 
-- `anon` lê apenas os posts com `pubblicato = true` ✓
-- `anon` tentando escrever é recusado ✓
-- `authenticated` consegue inserir ✓
+O schema foi criado à mão pelo Trajano no *SQL Editor*. A conexão Supabase
+do Claude ainda aponta para outra conta, então **este projeto não foi
+verificado** — diferente do primeiro, onde os papéis foram testados um a
+um no banco.
+
+Para destravar a verificação: reconectar o conector Supabase em
+https://claude.ai/settings/connectors apontando para
+`trajanoferrari@gmail.com`. Sem isso, cada ajuste de banco nas fases
+seguintes vira SQL para colar à mão.
+
+Ainda a conferir quando o acesso voltar:
+
+- [ ] `anon` lê apenas os posts com `pubblicato = true`
+- [ ] `anon` tentando escrever é recusado
+- [ ] `authenticated` consegue inserir *(era o bug do SQL do briefing)*
+- [ ] bucket `blog` existe e é público
+
+### Projeto antigo, a apagar
+
+Existe um `trajanoferrari-it` idêntico na conta `crosscardioitalia@gmail.com`
+(`xjtwzhavbyiiwsivvcst`), criado antes de saber qual conta era a certa.
+**Deve ser apagado**: dois projetos com o mesmo schema é o tipo de coisa
+que faz o site apontar para o banco errado sem ninguém perceber.
 
 ### ⚠️ Dois passos manuais, antes de o site ir ao ar
 
@@ -204,7 +217,8 @@ Sem estes itens o site não vai ao ar:
 1. [ ] Baixar os 12 reels em MP4 e indicar qual entra em qual seção
 2. [ ] Selecionar as fotos: 1 hero · 3 Chi sono · 1 Percorso
 3. [ ] Confirmar a média de alunas fora do verão, se for maior que 18
-4. [x] ~~Criar projeto Supabase e gerar as duas chaves~~ — feito
+4. [~] Projeto Supabase criado na conta pessoal. Falta a chave
+   anon/publishable e a verificação do schema
 5. [ ] Confirmar o número de WhatsApp que vai no CTA
    *(no site antigo havia só `trajano.ferrari@gmail.com`, nenhum número)*
 
@@ -218,3 +232,5 @@ Acrescentadas na fase 0:
 9. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
 10. [ ] Cadastrar as duas variáveis de ambiente no Netlify
 11. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
+12. [ ] Reconectar o conector Supabase na conta `trajanoferrari@gmail.com`
+13. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`
