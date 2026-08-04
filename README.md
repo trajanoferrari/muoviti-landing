@@ -220,21 +220,24 @@ commitada.
 Sem estes itens o site não vai ao ar:
 
 1. [ ] Baixar os 12 reels em MP4 e indicar qual entra em qual seção
-2. [ ] Selecionar as fotos: 1 hero · 3 Chi sono · 1 Percorso
-3. [ ] Confirmar a média de alunas fora do verão, se for maior que 18
-4. [x] ~~Criar projeto Supabase, gerar as chaves e verificar o schema~~ — feito
-5. [ ] Confirmar o número de WhatsApp que vai no CTA
-   *(no site antigo havia só `trajano.ferrari@gmail.com`, nenhum número)*
+2. [ ] **Foto de hero com 2400px de largura ou mais** — conduzindo a aula,
+   gente em movimento ao fundo. **Bloqueia o hero da fase 2.** Nenhuma das
+   19 fotos do repositório serve: a de conteúdo certo tem 399px
+3. [ ] Selecionar as fotos de Chi sono (3) e Percorso (1)
+4. [ ] Confirmar a média de alunas fora do verão, se for maior que 18
+5. [x] ~~Criar projeto Supabase, gerar as chaves e verificar o schema~~ — feito
+6. [x] ~~Confirmar o número de WhatsApp~~ — `+39 320 056 8927`
+   → `https://wa.me/393200568927`
 
 Acrescentadas na fase 0:
 
-6. [ ] Desativar o cadastro público no Supabase *(ver acima — é o item
+7. [ ] Desativar o cadastro público no Supabase *(ver acima — é o item
    mais urgente da lista)*
-7. [ ] Criar o usuário único do `/admin`
-8. [x] ~~Liberar escrita do repositório para o Claude no GitHub~~ — feito
+8. [ ] Criar o usuário único do `/admin`
+9. [x] ~~Liberar escrita do repositório para o Claude no GitHub~~ — feito
    *(faltava instalar o GitHub App, não uma permissão do app OAuth)*
-9. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
-10. [ ] Cadastrar as duas variáveis de ambiente no Netlify
-11. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
-12. [x] ~~Reconectar o conector Supabase na conta pessoal~~ — feito
-13. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`
+10. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
+11. [ ] Cadastrar as duas variáveis de ambiente no Netlify
+12. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
+13. [x] ~~Reconectar o conector Supabase na conta pessoal~~ — feito
+14. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`

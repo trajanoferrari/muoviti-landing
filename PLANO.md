@@ -85,18 +85,18 @@ O CTA aparece onde uma objeção acabou de cair, nunca antes.
 DICONO). No celular isso é um deserto de 6 a 8 telas sem ação possível.
 Quem se convence no vídeo tem que rolar muito para agir.
 
-**Proposta:** botão fixo de WhatsApp no rodapé, **só no celular**,
-aparecendo depois que o Hero sai da tela.
+**✅ APROVADO — botão fixo de WhatsApp no celular, só no trecho sem CTA.**
 
-- **A favor:** a página tem uma única ação; o público é 100% mobile;
-  resolve o deserto sem inventar seção nova.
-- **Contra:** ocupa ~56px permanentes de uma tela pequena, e tem cheiro
-  de landing page agressiva — o oposto do tom contido que o briefing
-  pede na Parte 2.2.
-- **Meio caminho:** aparece só entre `GUARDA` e `COSA DICONO`, exatamente
-  o trecho sem CTA, e desaparece depois. Discreto e resolve o problema.
+Comportamento definido:
 
-→ **Decisão do Trajano.** Ver seção 7.
+- Aparece quando `GUARDA` entra na tela
+- Desaparece quando `COME LAVORIAMO` entra na tela (ali já existe CTA
+  próprio, e dois ao mesmo tempo viram ruído)
+- **Só no celular.** No desktop a página é curta e os 4 CTAs bastam
+- Rodapé, altura contida, sem sombra pesada, sem animação de entrada
+  chamativa — o briefing pede tom contido na Parte 2.2
+
+Não aparece no hero (já tem CTA), nem em `CONTATTO` (é a própria ação).
 
 ---
 
@@ -744,15 +744,25 @@ A seção 4 se chama **`Non è Zumba.`** e argumenta contra *"format
 internazionali standardizzati"*. Duas telas depois, a lista de formações
 inclui **`Zumba Basic 1`**.
 
-Um diretor técnico atento vai notar. Três saídas:
+**✅ RESOLVIDO — assumir.** Conhecer o padrão e ter escolhido outro
+caminho é mais forte que nunca ter visto o padrão.
 
-- **a)** Tirar da lista. É a formação menos relevante das sete.
-- **b)** Manter e assumir: *"Zumba Basic 1 — conosco il format. Ho scelto
-  un'altra strada."* Vira força em vez de contradição.
-- **c)** Deixar como está e aceitar o risco.
+Implementação: a lista fica intacta, e a frase entra **abaixo** dela, na
+fonte utilitária, pequena. Não como sufixo do item — cláusula pendurada
+num item de lista fica pobre tipograficamente.
 
-Recomendo **(b)**. Conhecer o padrão e ter escolhido outro caminho é mais
-forte que nunca ter visto o padrão.
+```
+- Insegnante Tecnico di 3° Livello — Libertas (riconosciuto CONI)
+- Cross Cardio L3
+- Cross Cardio Mobility
+- Cross Cardio SGT
+- Outdoor Coach
+- Zumba Basic 1
+- Assicurazione professionale attiva
+
+  Zumba Basic 1 è in questa lista perché conosco il format.
+  Ho scelto un'altra strada.
+```
 
 ### 5.3 · Doze anos ou treze?
 
@@ -760,33 +770,38 @@ forte que nunca ter visto o padrão.
 - Seção 4: *"costruito in **dodici** anni di sala"*
 - CHI SONO: começou em **2013** → 13 anos em 2026 ✓
 
-O "dodici" da seção 4 provavelmente se refere ao tempo de construção do
-método, não à carreira. Mas na leitura corrida soa como erro. Sugiro
-`in dodici anni di sala` → **`in più di dieci anni di sala`**, que é
-verdade nas duas leituras e não briga com o `13`.
+**✅ RESOLVIDO** junto com 5.4 — a frase inteira foi reescrita. Ver
+seção 6-bis.
 
 ### 5.4 · Quando nasceu o Cardio Dance Brasil?
 
 - Seção 4: *"Nato in Brasile, costruito in dodici anni"*
 - PERCORSO, 2024: *"Nascita del Cardio Dance Brasil, adattato al pubblico italiano"*
 
-Nasceu no Brasil ou em 2024 na Itália? As duas coisas podem ser verdade —
-raiz brasileira, formato italiano de 2024 — mas o texto não deixa claro,
-e é justamente a seção que estabelece propriedade do método. Vale uma
-frase que resolva. Pergunta na seção 7.
+**✅ RESOLVIDO — o método nasce na Itália, em 2024.** A raiz é brasileira,
+o método é italiano. Frase reescrita na seção 6-bis.
+
+Consequência que vale registrar: isso **fortalece** o posicionamento. Um
+método criado em Catania, em 2024, para o público italiano, é mais
+defensável diante de um diretor técnico do que um método importado — e
+combina com *"non si compra a licenza"* na mesma seção.
 
 ### 5.5 · O quarto interstício não existe
 
 A Parte 3.3 do briefing diz **quatro frases**. A Parte 4 lista **três**
 (`>>>` antes de I NUMERI, de GUARDA e de CHI SONO). Falta uma.
 
-Onde ela cabe melhor: **entre `COSA DICONO` e `COME LAVORIAMO`** — é o
-único trecho longo sem respiro, e é a transição de "prova" para
-"proposta". Sugestão de texto, para o Trajano aprovar ou trocar:
+**✅ RESOLVIDO** — entra **entre `COSA DICONO` e `COME LAVORIAMO`**, o
+único trecho longo sem respiro, e a transição de "prova" para "proposta".
 
-> ### La prima lezione la pago io. Se non funziona, non se ne parla più.
+Texto aprovado, com um ajuste de italiano que eu fiz depois:
 
-Antecipa a aula grátis e assume o risco em voz alta. Ver seção 7.
+> ### La prima lezione la offro io. Se non funziona, non se ne parla più.
+
+Eu tinha escrito `la pago io`. Trocei para `la offro io`: em italiano
+"pagar a aula" soa como se ele desembolsasse dinheiro, e o que acontece
+é que ele oferece a aula. `offro` é a palavra natural e tem a mesma
+força. Se preferir `la pago io`, é uma linha de mudança.
 
 ---
 
@@ -827,45 +842,137 @@ afetam o LCP, mas quem aperta play no 4G desiste. Recodificar é tarefa da
 Fase 3 e eu faço — mas só faz sentido depois que o Trajano disser **quais
 dos 12 reels** entram, senão recodifico o material errado.
 
-### 6.3 · O número de WhatsApp
+### 6.3 · O número de WhatsApp — ✅ RESOLVIDO
 
-**É a única ação da página** e ainda não existe. Quatro CTAs apontam para
-o nada. No site antigo havia só `trajano.ferrari@gmail.com`.
+```
++39 320 056 8927
+```
 
-A Fase 2 pode construir com um `href` provisório, mas o site não vai ao
-ar sem isso.
+Link para os quatro CTAs (o `wa.me` não leva `+` nem espaços):
+
+```
+https://wa.me/393200568927
+```
+
+**Mensagem pré-preenchida — recomendo usar.** Quando o diretor abre o
+WhatsApp com a tela em branco, ele tem que redigir. Com a mensagem
+pronta, é um toque em "enviar":
+
+```
+https://wa.me/393200568927?text=Ciao%20Trajano%2C%20ti%20scrivo%20dal%20tuo%20sito.
+```
+
+→ *"Ciao Trajano, ti scrivo dal tuo sito."*
+
+Dois motivos: reduz o atrito no momento exato da decisão, e o Trajano
+passa a saber que o contato veio do site e não do currículo impresso —
+que é a única medição de origem que a página tem, já que não há analytics
+nesta versão.
+
+**Nota técnica para a Fase 2:** o número entra em **uma constante única**,
+não repetido nos quatro CTAs. Trocar de número não pode significar caçar
+quatro lugares.
 
 ---
 
-## 7. Decisões que preciso do Trajano
+### 6-bis · Texto final em italiano, das decisões 5, 6, 7 e 8
 
-As sete primeiras mudam o que a Fase 2 constrói. As três últimas são
-material.
+Aqui estão as frases exatas que mudam. **Confira, é a sua voz.**
 
-| # | Decisão | Minha recomendação |
+#### SEZIONE 4 — `È un metodo mio` (decisões 6 e 8)
+
+| | |
+|---|---|
+| **Antes** | Nato in Brasile, costruito in dodici anni di sala, adattato al pubblico italiano. |
+| **Depois** | **Nato a Catania nel 2024, costruito su più di dieci anni di sala in Brasile.** |
+
+Resolve as duas decisões numa frase: o método nasce na Itália em 2024, a
+experiência vem do Brasil, e o conflito entre `dodici` e `13 anni`
+desaparece. `più di dieci` é verdade nas duas leituras.
+
+#### SEZIONE 6 — linha de 2024 do PERCORSO (decisão 8)
+
+| | |
+|---|---|
+| **Antes** | 2024 · Nascita del Cardio Dance Brasil, adattato al pubblico italiano |
+| **Depois** | **2024 · Nascita del Cardio Dance Brasil, a Catania** |
+
+`adattato al pubblico italiano` ficou redundante: se nasceu em Catania,
+já nasceu para o público italiano.
+
+#### SEZIONE 6 — nota abaixo das formações (decisão 5)
+
+> Zumba Basic 1 è in questa lista perché conosco il format.
+> Ho scelto un'altra strada.
+
+#### INTERSTÍCIO 4 — entre COSA DICONO e COME LAVORIAMO (decisão 7)
+
+> ### La prima lezione la offro io. Se non funziona, non se ne parla più.
+
+---
+
+## 7. Decisões — resolvidas
+
+Aprovadas pelo Trajano. Esta tabela é a que a Fase 2 obedece.
+
+| # | Decisão | Resolução |
 |---|---|---|
-| 1 | Botão fixo de WhatsApp no celular? | **Sim, mas só no trecho sem CTA** (entre GUARDA e COSA DICONO) |
-| 2 | Ordem dos números: `18·3·13·500` em vez de `13·500·18·3`? | **Sim** — o mais forte primeiro |
-| 3 | Em COSA PORTO, `Non ti do lavoro in più` primeiro? | **Sim** — é a objeção real |
-| 4 | Em COME LAVORIAMO, `Prova` (aula grátis) primeiro? | **Sim** — é o que fecha |
-| 5 | `Zumba Basic 1`: tirar, assumir ou deixar? | **Assumir**: *"conosco il format, ho scelto un'altra strada"* |
-| 6 | `dodici anni` → `più di dieci anni`? | **Sim** — evita conflito com o `13` |
-| 7 | Texto do 4º interstício, entre COSA DICONO e COME LAVORIAMO | Minha sugestão em 5.5, ou a sua |
-| 8 | Cardio Dance Brasil nasceu no Brasil ou em 2024? | Preciso de uma frase que resolva |
-| 9 | **Foto de hero** em 2400px+ | Bloqueia a Fase 2 |
-| 10 | **Número de WhatsApp** | Bloqueia o site inteiro |
+| 1 | Botão fixo de WhatsApp no celular | ✅ **Sim**, só entre `GUARDA` e `COME LAVORIAMO` |
+| 2 | Ordem dos números | ✅ **`18 · 3 · 13 · 500`** |
+| 3 | Ordem em COSA PORTO | ✅ **`Non ti do lavoro in più` primeiro** |
+| 4 | Ordem em COME LAVORIAMO | ✅ **`Prova` primeiro** |
+| 5 | `Zumba Basic 1` | ✅ **Assumir**, com a nota abaixo da lista |
+| 6 | `dodici anni` | ✅ **`più di dieci anni`** |
+| 7 | 4º interstício | ✅ **`La prima lezione la offro io...`**, entre COSA DICONO e COME LAVORIAMO |
+| 8 | Origem do Cardio Dance Brasil | ✅ **Nasce em Catania, 2024.** Raiz brasileira, método italiano |
+| 9 | Foto de hero em 2400px+ | ⛔ **PENDENTE — bloqueia o hero** |
+| 10 | Número de WhatsApp | ✅ **`+39 320 056 8927`** |
 
-**Nenhuma dessas mudanças altera o sentido do texto.** São ordem e
-precisão. Se você discordar de qualquer uma, o briefing manda — é o seu
-texto e a sua voz.
+Ordem final das seções, com o quarto interstício no lugar:
+
+```
+0  HERO                                          ► CTA 1
+>>> "Ore 9 del mattino..."                       (corta no celular)
+1  I NUMERI                    18 · 3 · 13 · 500
+2  COSA PORTO                  burocracia 1º     ► CTA 2
+>>> "Riempire una lezione è facile..."           (mantém sempre)
+3  GUARDA                                        ┌ botão fixo
+4  CARDIO DANCE BRASIL                           │ aparece
+>>> "Tredici anni davanti a una sala..."         │ (corta no celular)
+5  CHI SONO                                      │
+6  PERCORSO E FORMAZIONI       nota Zumba        │
+7  COSA DICONO                                   └ botão fixo
+>>> "La prima lezione la offro io..."      NOVO    desaparece
+8  COME LAVORIAMO              Prova 1º          ► CTA 3
+9  CONTATTO                                      ► CTA 4
+10 DIARIO
+```
+
+### O único bloqueio que sobrou
+
+**Decisão 9 — a foto do hero.** Preciso de você conduzindo, gente em
+movimento ao fundo, com **2400px de largura ou mais**. A que tem o
+conteúdo certo no repositório (`trajano-aula.jpg`) tem 399px.
+
+O que a Fase 2 pode fazer sem ela: construir todas as 11 seções, os
+tokens, os 4 interstícios e o hero **com estrutura pronta e uma foto
+provisória marcada no código**. Trocar depois é uma linha.
+
+O que ela **não** pode fazer: decidir o enquadramento, o ponto focal e a
+área calma onde o texto do hero se apoia no desktop. Isso depende da foto
+real, e é a primeira coisa que o leitor vê.
 
 ---
 
 ## 8. O que a Fase 2 recebe deste documento
 
-- Ordem das seções: **a do briefing, sem mudança**
+- Ordem das seções: a do briefing, mais o **4º interstício** entre
+  `COSA DICONO` e `COME LAVORIAMO`
 - Ordem **interna** dos blocos: conforme decisões 2, 3 e 4
-- Quatro CTAs nos lugares mapeados, mais o botão fixo se aprovado
+- Quatro CTAs nos lugares mapeados, mais o **botão fixo no celular**
+- Número de WhatsApp em **constante única**: `https://wa.me/393200568927`
+  com a mensagem pré-preenchida
+- As quatro frases em italiano da seção 6-bis, já aprovadas
 - Wireframes desktop e mobile de cada seção
 - Regra de assimetria: hero, COSA PORTO e CHI SONO quebram a grade;
   o resto fica quieto
