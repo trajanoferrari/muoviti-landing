@@ -100,24 +100,27 @@ podem ser rodadas de novo no *SQL Editor* sem estragar nada.
 - `0001_posts.sql` — tabela `posts` + RLS
 - `0002_storage_blog.sql` — bucket `blog` + policies
 
-### Estado da verificação
+### Verificação
 
-O schema foi criado à mão pelo Trajano no *SQL Editor*. A conexão Supabase
-do Claude ainda aponta para outra conta, então **este projeto não foi
-verificado** — diferente do primeiro, onde os papéis foram testados um a
-um no banco.
+O schema foi criado à mão no *SQL Editor* e depois conferido no banco.
+Estrutura: tabela `posts`, RLS ligada, 2 policies em `posts`, bucket
+`blog` público, 4 policies no bucket, índice de data. Todo presente.
 
-Para destravar a verificação: reconectar o conector Supabase em
-https://claude.ai/settings/connectors apontando para
-`trajanoferrari@gmail.com`. Sem isso, cada ajuste de banco nas fases
-seguintes vira SQL para colar à mão.
+Comportamento testado assumindo cada papel:
 
-Ainda a conferir quando o acesso voltar:
+- [x] `anon` lê apenas os posts com `pubblicato = true`
+- [x] `anon` tentando escrever é recusado
+- [x] `authenticated` consegue inserir *(era o bug do SQL do briefing)*
+- [x] bucket `blog` existe e é público
 
-- [ ] `anon` lê apenas os posts com `pubblicato = true`
-- [ ] `anon` tentando escrever é recusado
-- [ ] `authenticated` consegue inserir *(era o bug do SQL do briefing)*
-- [ ] bucket `blog` existe e é público
+O auditor de segurança do Supabase levanta dois avisos, ambos conhecidos
+e aceitos:
+
+1. `auth full access` é permissiva para qualquer autenticado. É o desenho
+   pedido no briefing — um único usuário admin. **Só é segura com o
+   cadastro público desligado** (ver abaixo).
+2. O bucket `blog` permite listar arquivos. A policy está restrita a
+   `authenticated`, ou seja, só o admin lista. Visitante não.
 
 ### Projeto antigo, a apagar
 
@@ -129,14 +132,16 @@ que faz o site apontar para o banco errado sem ninguém perceber.
 ### ⚠️ Dois passos manuais, antes de o site ir ao ar
 
 1. **Desativar o cadastro público.**
-   *Authentication → Sign In / Providers → Email → “Allow new users to
-   sign up”: desligar.* O Supabase deixa isso **ligado** por padrão, e a
-   policy de escrita vale para qualquer usuário autenticado: com o
-   cadastro aberto, qualquer pessoa poderia se registrar e ganhar acesso
-   de escrita no diário. Este é o mais importante dos dois.
+   https://supabase.com/dashboard/project/ojmccvnopinkbnpbgrof/auth/providers
+   → **Email** → desligar **“Allow new users to sign up”** → Save.
+   O Supabase deixa isso **ligado** por padrão, e a policy de escrita vale
+   para qualquer usuário autenticado: com o cadastro aberto, qualquer
+   pessoa poderia se registrar e ganhar acesso de escrita no diário.
+   Este é o mais importante dos dois.
 2. **Criar o usuário único do `/admin`.**
-   *Authentication → Users → Add user*, marcando “auto confirm”. A senha
-   não deve passar pelo chat.
+   https://supabase.com/dashboard/project/ojmccvnopinkbnpbgrof/auth/users
+   → **Add user** → **Create new user**, marcando “auto confirm”.
+   A senha não deve passar pelo chat.
 
 Depois do passo 2, reforço recomendado: na policy `auth full access`,
 trocar os `true` por `auth.uid() = '<uid-do-usuário>'`. Assim a escrita
@@ -217,8 +222,7 @@ Sem estes itens o site não vai ao ar:
 1. [ ] Baixar os 12 reels em MP4 e indicar qual entra em qual seção
 2. [ ] Selecionar as fotos: 1 hero · 3 Chi sono · 1 Percorso
 3. [ ] Confirmar a média de alunas fora do verão, se for maior que 18
-4. [~] Projeto Supabase criado na conta pessoal. Falta a chave
-   anon/publishable e a verificação do schema
+4. [x] ~~Criar projeto Supabase, gerar as chaves e verificar o schema~~ — feito
 5. [ ] Confirmar o número de WhatsApp que vai no CTA
    *(no site antigo havia só `trajano.ferrari@gmail.com`, nenhum número)*
 
@@ -232,5 +236,5 @@ Acrescentadas na fase 0:
 9. [ ] Juntar a branch da fase 0 no `main`, para o Netlify publicar
 10. [ ] Cadastrar as duas variáveis de ambiente no Netlify
 11. [ ] Recodificar os dois vídeos: 25 MB e 19 MB são demais para 4G
-12. [ ] Reconectar o conector Supabase na conta `trajanoferrari@gmail.com`
+12. [x] ~~Reconectar o conector Supabase na conta pessoal~~ — feito
 13. [ ] Apagar o projeto antigo na conta `crosscardioitalia@gmail.com`
