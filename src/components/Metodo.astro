@@ -26,12 +26,8 @@ const blocchi = [
 
 // Carrossel: 3 vídeos no desktop, 1 no celular com os outros dois
 // atrás do scroll. Ver PLANO.md, corte 3.
-// PENDENTE: por enquanto há dois MP4 no repositório. O terceiro
-// entra quando o Trajano indicar os reels.
-const video = [
-  { src: '/video/aula.mp4', poster: '/img/port-23.webp' },
-  { src: '/video/entrevista.mp4', poster: '/img/hero-v3.webp' },
-];
+// O mapeamento reel → arquivo está em src/lib/video.ts.
+import { METODO as video } from '../lib/video';
 ---
 
 <section data-reveal class="sezione metodo" aria-labelledby="metodo-titolo">

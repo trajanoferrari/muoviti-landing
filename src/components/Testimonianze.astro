@@ -5,12 +5,8 @@
 // preload="none" nos três, obrigatoriamente: é o ponto mais pesado
 // da página depois do hero. Sem isso o LCP vai embora.
 //
-// PENDENTE: são os vídeos que existem no repositório. Os três
-// depoimentos verticais definitivos são pendência do Trajano.
-const testimonianze = [
-  { src: '/video/entrevista.mp4', poster: '/img/trajano-salto.webp' },
-  { src: '/video/aula.mp4', poster: '/img/port-23.webp' },
-];
+// O mapeamento reel → arquivo está em src/lib/video.ts.
+import { TESTIMONIANZE as testimonianze } from '../lib/video';
 ---
 
 <section data-reveal class="sezione testimonianze" aria-labelledby="testimonianze-titolo">

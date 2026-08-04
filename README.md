@@ -170,6 +170,36 @@ fica amarrada àquele usuário, e não ao papel em geral.
 
 ---
 
+## Vídeos: o que falta e como trocar
+
+O mapeamento reel → seção está em **`src/lib/video.ts`**. Os arquivos
+definitivos ainda não estão no repositório: hoje as sete posições são
+servidas pelos dois MP4 provisórios que já existiam.
+
+| Seção | Nome do arquivo esperado | Reel |
+|---|---|---|
+| 3 · Guarda | `principale.mp4` | `DU0e_W8Dfwk` |
+| 4 · Metodo | `sala-1.mp4` | `DbP7sZRs2jN` |
+| 4 · Metodo | `sala-2.mp4` | `DOjDmMYDCYl` |
+| 4 · Metodo | `coreografia.mp4` | `DWwtYhGDYEG` |
+| 7 · Cosa dicono | `testimonianza-1.mp4` | `DXusLJrjbIj` |
+| 7 · Cosa dicono | `testimonianza-2.mp4` | `DXwicdjjLYN` |
+| 7 · Cosa dicono | `testimonianza-3.mp4` | `DX08K9HEYLX` |
+
+Reservas da seção 4, fora do site: `DADTtFqsM9J`, `C_41k9BM0Jb`.
+
+**Para trocar:** salve o MP4 em `public/video/` com o nome da coluna do
+meio e, em `src/lib/video.ts`, troque `src` para o valor de `file`. Uma
+linha por vídeo. Nenhum componente precisa ser tocado.
+
+**Sem embed do Instagram, por decisão do briefing (5.1):** script de
+terceiro pesa, quebra quando o post muda e instala cookie de terceiro —
+o que obrigaria a banner de consentimento GDPR. Auto-hospedar elimina os
+três problemas de uma vez.
+
+Recodificar antes de subir: H.264 720p, CRF ~24, áudio 96 kbps, algo
+entre 2 e 4 MB por arquivo.
+
 ## Diário: por que `post.astro` e não `[slug].astro`
 
 A Parte 5.2 do briefing prevê `diario/[slug].astro`. O arquivo se chama
@@ -270,7 +300,9 @@ commitada.
 
 Sem estes itens o site não vai ao ar:
 
-1. [ ] Baixar os 12 reels em MP4 e indicar qual entra em qual seção
+1. [~] Reels: o mapeamento por seção **está feito** (ver acima). Faltam os
+   **arquivos MP4** — não é possível baixar do Instagram do ambiente do
+   Claude, e o site não usa embed por decisão do briefing
 2. [ ] **Foto de hero com 2400px de largura ou mais** — conduzindo a aula,
    gente em movimento ao fundo. **Bloqueia o hero da fase 2.** Nenhuma das
    19 fotos do repositório serve: a de conteúdo certo tem 399px
