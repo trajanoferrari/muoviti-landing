@@ -133,6 +133,31 @@ Existe um `trajanoferrari-it` idêntico na conta `crosscardioitalia@gmail.com`
 **Deve ser apagado**: dois projetos com o mesmo schema é o tipo de coisa
 que faz o site apontar para o banco errado sem ninguém perceber.
 
+### ⚠️ A pegadinha das duas chaves do Email
+
+Em *Authentication → Sign In / Providers* existem **duas** chaves parecidas,
+e confundir uma com a outra tranca você fora do `/admin`:
+
+| Chave | Deve estar | O que faz |
+|---|---|---|
+| **Enable Email provider** | ✅ **LIGADA** | permite entrar com e-mail e senha |
+| **Allow new users to sign up** | ❌ desligada | impede estranhos de criar conta |
+
+Aconteceu de verdade: desligar o provedor inteiro em vez de só o cadastro
+produziu `422: email_provider_disabled` no login **e** no envio do e-mail
+de recuperação de senha — então nem apagar e recriar o usuário resolvia.
+
+**Como diagnosticar rápido** se o login voltar a falhar: os logs de
+autenticação do Supabase dizem o motivo exato. Pelo MCP,
+`get_logs(service: "auth")`; no painel, *Logs → Auth*. Foi assim que este
+caso foi resolvido, sem precisar de print de tela.
+
+Nota sobre o e-mail: o SMTP compartilhado do plano free é limitado e
+costuma falhar. Recuperação de senha por e-mail não é caminho confiável
+aqui — para trocar a senha, apagar e recriar o usuário no painel
+(digitando a senha na hora) funciona sempre. Nada está ligado ao usuário:
+a tabela `posts` não guarda referência a quem escreveu.
+
 ### ⚠️ Dois passos manuais, antes de o site ir ao ar
 
 1. **Desativar o cadastro público.**
